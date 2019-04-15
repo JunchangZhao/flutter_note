@@ -4,6 +4,10 @@ import 'package:flutter_app/view/trash_note_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeDrawer extends StatelessWidget {
+  Function() fun;
+
+  HomeDrawer(this.fun);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,8 +38,13 @@ class HomeDrawer extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  new MaterialPageRoute(builder: (context) => TrashNotePage()));
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => TrashNotePage())).then((value) {
+                this.fun();
+              });
+              Navigator.pop(context);
             },
             child: ListTile(
               leading: Icon(
@@ -56,6 +65,7 @@ class HomeDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(context,
                   new MaterialPageRoute(builder: (context) => SettingPage()));
+              Navigator.pop(context);
             },
             child: ListTile(
               leading: Icon(

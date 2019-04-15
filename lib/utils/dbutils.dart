@@ -81,4 +81,9 @@ class NoteSqlite {
     return await db.update(tableName, note.toMap(),
         where: '$columnCreateTime = ?', whereArgs: [note.createTime]);
   }
+
+  Future<int> realDelete(int createTime) async {
+    return await db.delete(tableName,
+        where: '$columnCreateTime = ?', whereArgs: [createTime]);
+  }
 }

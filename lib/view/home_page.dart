@@ -98,7 +98,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         ),
       )),
       drawer: Drawer(
-        child: HomeDrawer(),
+        child: HomeDrawer(() {
+          getAllNotes();
+        }),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNote,
@@ -133,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     )
                   ],
                 ),
-                duration: Duration(seconds: 2),
+                duration: Duration(seconds: 1),
               ));
             },
             child: GestureDetector(

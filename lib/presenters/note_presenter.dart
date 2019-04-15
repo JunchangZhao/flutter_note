@@ -33,4 +33,9 @@ class NotePresenter {
     var result = await sqlite.update(note);
     return result;
   }
+
+  static Future<int> realDeleteNote(Note note) async {
+    NoteSqlite sqlite = await NoteSqlite.getInstance();
+    return await sqlite.realDelete(note.createTime);
+  }
 }
