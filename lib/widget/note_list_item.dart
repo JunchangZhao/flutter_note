@@ -41,7 +41,10 @@ class _NoteListItemState extends State<NoteListItem> {
                     children: <Widget>[
                       Text(
                         note.title.trim(),
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(
+                          fontSize: 22,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       )
                     ],
@@ -52,8 +55,9 @@ class _NoteListItemState extends State<NoteListItem> {
                         Expanded(
                           child: Text(
                             _getSubTitle(note.context),
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               color: Colors.grey,
                             ),
                             maxLines: 2,
@@ -74,7 +78,7 @@ class _NoteListItemState extends State<NoteListItem> {
                 ],
               ),
             ),
-            height: 108,
+            height: 96,
           ),
           Divider(),
         ],
