@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   getAllNotes() {
-    NotePresenter.getAllNotes().then((list) {
+    NotePresenter.getAllNotes(false).then((list) {
       setState(() {
         this.notes = list;
       });
@@ -110,41 +110,41 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   ListView buildNotesListView() {
     return ListView.builder(
-                    itemCount: (notes == null ? 0 : notes.length),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Dismissible(
-                        key: new Key("${this.notes[index].createTime}"),
-                        onDismissed: (direction) {
-                          _removeNote(index);
-                          Scaffold.of(context).showSnackBar(new SnackBar(
-                            content: Row(
-                              children: <Widget>[
-                                Expanded(child: Text("Note is dismissed")),
-                                GestureDetector(
-                                  onTap: _undoDelete,
-                                  child: Text(
-                                    "undo",
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.white70,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            duration: Duration(seconds: 2),
-                          ));
-                        },
-                        child: GestureDetector(
-                            onTap: () {
-                              _edit(this.notes[index]);
-                            },
-                            child: NoteListItem(notes.elementAt(index))),
-                        background: Container(
-                          color: Colors.grey,
+        itemCount: (notes == null ? 0 : notes.length),
+        itemBuilder: (BuildContext context, int index) {
+          return Dismissible(
+            key: new Key("${this.notes[index].createTime}"),
+            onDismissed: (direction) {
+              _removeNote(index);
+              Scaffold.of(context).showSnackBar(new SnackBar(
+                content: Row(
+                  children: <Widget>[
+                    Expanded(child: Text("Note is dismissed")),
+                    GestureDetector(
+                      onTap: _undoDelete,
+                      child: Text(
+                        "undo",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.white70,
+                          decoration: TextDecoration.underline,
                         ),
-                      );
-                    });
+                      ),
+                    )
+                  ],
+                ),
+                duration: Duration(seconds: 2),
+              ));
+            },
+            child: GestureDetector(
+                onTap: () {
+                  _edit(this.notes[index]);
+                },
+                child: NoteListItem(notes.elementAt(index))),
+            background: Container(
+              color: Colors.grey,
+            ),
+          );
+        });
   }
 }

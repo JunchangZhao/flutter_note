@@ -2,9 +2,9 @@ import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/utils/dbutils.dart';
 
 class NotePresenter {
-  static Future<List<Note>> getAllNotes() async {
+  static Future<List<Note>> getAllNotes(bool trash) async {
     NoteSqlite sqlite = await NoteSqlite.getInstance();
-    var result = await sqlite.queryAll();
+    var result = await sqlite.queryAll(trash);
     return result;
   }
 

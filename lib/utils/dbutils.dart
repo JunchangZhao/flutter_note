@@ -40,7 +40,7 @@ class NoteSqlite {
     return note;
   }
 
-  Future<List<Note>> queryAll() async {
+  Future<List<Note>> queryAll(bool trash) async {
     List<Map> maps = await db.query(tableName,
         columns: [
           columnTitile,
@@ -49,7 +49,9 @@ class NoteSqlite {
           columnModifyTime,
           columnIsDeleted
         ],
-        orderBy: columnModifyTime);
+        orderBy: columnModifyTime,
+        where: '$columnIsDeleted = ?',
+        whereArgs: [trash ? 1 : 0]);
 
     if (maps == null || maps.length == 0) {
       return null;
@@ -58,9 +60,7 @@ class NoteSqlite {
     List<Note> notes = [];
     for (int i = maps.length - 1; i >= 0; i--) {
       Note note = Note.fromMap(maps[i]);
-      if (!note.isDeleted) {
-        notes.add(note);
-      }
+      notes.add(note);
     }
     return notes;
   }

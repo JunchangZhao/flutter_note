@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/view/setting_page.dart';
+import 'package:flutter_app/view/trash_note_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -30,32 +32,44 @@ class HomeDrawer extends StatelessWidget {
               ],
             ),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.delete,
-              color: Colors.blue,
-            ),
-            title: Text(
-              "Go to Trash",
-              style: TextStyle(fontSize: 18, color: Colors.black54),
-            ),
-            trailing: Icon(
-              Icons.chevron_right,
-              color: Colors.blue,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) => TrashNotePage()));
+            },
+            child: ListTile(
+              leading: Icon(
+                Icons.delete,
+                color: Colors.blue,
+              ),
+              title: Text(
+                "Go to Trash",
+                style: TextStyle(fontSize: 18, color: Colors.black54),
+              ),
+              trailing: Icon(
+                Icons.chevron_right,
+                color: Colors.blue,
+              ),
             ),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.settings,
-              color: Colors.blue,
-            ),
-            title: Text(
-              "Settings",
-              style: TextStyle(fontSize: 18, color: Colors.black54),
-            ),
-            trailing: Icon(
-              Icons.chevron_right,
-              color: Colors.blue,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) => SettingPage()));
+            },
+            child: ListTile(
+              leading: Icon(
+                Icons.settings,
+                color: Colors.blue,
+              ),
+              title: Text(
+                "Settings",
+                style: TextStyle(fontSize: 18, color: Colors.black54),
+              ),
+              trailing: Icon(
+                Icons.chevron_right,
+                color: Colors.blue,
+              ),
             ),
           ),
           Expanded(
