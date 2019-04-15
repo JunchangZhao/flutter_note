@@ -84,7 +84,7 @@ class _NoteListItemState extends State<NoteListItem> {
 
   String _getCreateTime(int modifyTime) {
     DateTime time = DateTime.fromMillisecondsSinceEpoch(note.modifyTime);
-    String result = formatDate(time, [yyyy, '-', mm, '-', dd]);
-    return result;
+    return formatDate(
+        time, [HH, ':', nn, ':', ss, "\n", yyyy, '-', mm, '-', dd]);
   }
 }
