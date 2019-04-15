@@ -46,6 +46,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   void _edit(Note note) {
+    setState(() {
+      this.notes = null;
+    });
     Navigator.of(context).push(SlideRoute(EditNotePage(note))).then((result) {
       getAllNotes();
     });
