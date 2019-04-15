@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OKToast(
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Flutter Note',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
