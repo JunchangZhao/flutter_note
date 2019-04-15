@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/utils/date_format_base.dart';
+import 'package:flutter_app/utils/utils.dart';
 import 'dart:convert';
 
 import 'package:zefyr/zefyr.dart';
@@ -19,14 +20,6 @@ class _NoteListItemState extends State<NoteListItem> {
 
   _NoteListItemState(this.note);
 
-  String _getSubTitle(String context) {
-    NotusDocument document = NotusDocument.fromJson(json.decode(context));
-    if (document.toDelta().length < 3) {
-      return "";
-    }
-    return document.toDelta()[2].value.toString();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,7 +34,7 @@ class _NoteListItemState extends State<NoteListItem> {
                   Row(
                     children: <Widget>[
                       Text(
-                        note.title.trim(),
+                        note.title == "\n" ? "Undefined" : note.title,
                         style: TextStyle(
                           fontSize: 22,
                         ),
@@ -55,7 +48,7 @@ class _NoteListItemState extends State<NoteListItem> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            _getSubTitle(note.context),
+                            Utils.getSubTitle(note),
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 16,
@@ -66,7 +59,7 @@ class _NoteListItemState extends State<NoteListItem> {
                         ),
                         Align(
                           child: Text(
-                            _getCreateTime(note.modifyTime),
+                            Utils.getCreateTime(note.modifyTime),
                             style:
                                 TextStyle(color: Colors.black45, fontSize: 14),
                             textAlign: TextAlign.right,
@@ -85,11 +78,5 @@ class _NoteListItemState extends State<NoteListItem> {
         ],
       ),
     );
-  }
-
-  String _getCreateTime(int modifyTime) {
-    DateTime time = DateTime.fromMillisecondsSinceEpoch(note.modifyTime);
-    return formatDate(
-        time, [HH, ':', nn, ':', ss, "\n", yyyy, '-', mm, '-', dd]);
   }
 }

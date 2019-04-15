@@ -40,12 +40,22 @@ class _EditNotePage extends State<EditNotePage> {
 
   void _saveNote() {
     if (this.isEdit) {
-      NotePresenter.updateNote(Note(
+      Note note = Note(
           this.document.toDelta()[0].data,
           json.encode(this.document),
           widget.note.createTime,
-          DateTime.now().millisecondsSinceEpoch));
+          DateTime.now().millisecondsSinceEpoch);
+      if (this.document.length == 1 &&
+          this.document.toDelta()[0].data == "\n") {
+        NotePresenter.deleteNote(note);
+      } else {
+        NotePresenter.updateNote(note);
+      }
     } else {
+      if (this.document.length == 1 &&
+          this.document.toDelta()[0].data == "\n") {
+        return;
+      }
       this.isEdit = true;
       NotePresenter.addNote(
               this.document.toDelta()[0].data, json.encode(this.document))
