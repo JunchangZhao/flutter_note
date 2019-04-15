@@ -3,6 +3,7 @@ import 'package:flutter_app/presenters/note_presenter.dart';
 import 'package:flutter_app/router/custome_router.dart';
 import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/view/edit_note_page.dart';
+import 'package:flutter_app/widget/home_drawer.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_app/widget/note_list_item.dart';
 import 'package:oktoast/oktoast.dart';
@@ -88,43 +89,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               child: RefreshIndicator(
                 onRefresh: _getAllNotes,
                 child: ScrollConfiguration(
-                  child: ListView.builder(
-                      itemCount: (notes == null ? 0 : notes.length),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Dismissible(
-                          key: new Key("${this.notes[index].createTime}"),
-                          onDismissed: (direction) {
-                            _removeNote(index);
-                            Scaffold.of(context).showSnackBar(new SnackBar(
-                              content: Row(
-                                children: <Widget>[
-                                  Expanded(child: Text("Note is dismissed")),
-                                  GestureDetector(
-                                    onTap: _undoDelete,
-                                    child: Text(
-                                      "undo",
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        color: Colors.white70,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              duration: Duration(seconds: 2),
-                            ));
-                          },
-                          child: GestureDetector(
-                              onTap: () {
-                                _edit(this.notes[index]);
-                              },
-                              child: NoteListItem(notes.elementAt(index))),
-                          background: Container(
-                            color: Colors.grey,
-                          ),
-                        );
-                      }),
+                  child: buildNotesListView(),
                   behavior: ListBehavior(),
                 ),
               ),
@@ -133,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         ),
       )),
       drawer: Drawer(
-        child: new Text("123"),
+        child: HomeDrawer(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNote,
@@ -141,5 +106,45 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  ListView buildNotesListView() {
+    return ListView.builder(
+                    itemCount: (notes == null ? 0 : notes.length),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Dismissible(
+                        key: new Key("${this.notes[index].createTime}"),
+                        onDismissed: (direction) {
+                          _removeNote(index);
+                          Scaffold.of(context).showSnackBar(new SnackBar(
+                            content: Row(
+                              children: <Widget>[
+                                Expanded(child: Text("Note is dismissed")),
+                                GestureDetector(
+                                  onTap: _undoDelete,
+                                  child: Text(
+                                    "undo",
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.white70,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            duration: Duration(seconds: 2),
+                          ));
+                        },
+                        child: GestureDetector(
+                            onTap: () {
+                              _edit(this.notes[index]);
+                            },
+                            child: NoteListItem(notes.elementAt(index))),
+                        background: Container(
+                          color: Colors.grey,
+                        ),
+                      );
+                    });
   }
 }

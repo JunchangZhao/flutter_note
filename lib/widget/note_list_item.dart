@@ -34,7 +34,8 @@ class _NoteListItemState extends State<NoteListItem> {
         children: <Widget>[
           Container(
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding:
+                  const EdgeInsets.only(left: 12, right: 12, top: 4, bottom: 4),
               child: Column(
                 children: <Widget>[
                   Row(
@@ -78,7 +79,7 @@ class _NoteListItemState extends State<NoteListItem> {
                 ],
               ),
             ),
-            height: 96,
+            height: 80,
           ),
           Divider(),
         ],
