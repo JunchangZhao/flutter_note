@@ -14,11 +14,14 @@ class EditNotePage extends StatefulWidget {
   _EditNotePage createState() => _EditNotePage();
 }
 
-class _EditNotePage extends State<EditNotePage> {
+class _EditNotePage extends State<EditNotePage>
+    with SingleTickerProviderStateMixin {
   ZefyrController _controller;
   FocusNode _focusNode;
   NotusDocument document;
   bool isEdit = false;
+  TabController tabController;
+  bool showFloatButton = true;
 
   @override
   void initState() {
@@ -36,6 +39,16 @@ class _EditNotePage extends State<EditNotePage> {
       _saveNote();
     });
     _focusNode = new FocusNode();
+    tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() {
+      setState(() {
+        if (tabController.index == 0) {
+          showFloatButton = true;
+        } else {
+          showFloatButton = false;
+        }
+      });
+    });
   }
 
   void _saveNote() {
@@ -68,32 +81,111 @@ class _EditNotePage extends State<EditNotePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Edit Note"),
+      body: NestedScrollView(
+        headerSliverBuilder: _sliverBuilder,
+        body: Column(
+          children: <Widget>[
+            _getTabBar(),
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: <Widget>[
+                  _getTabView(true),
+                  _getTabView(false),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
-      body: Container(
+      floatingActionButton: _getFloatingButtun(),
+    );
+  }
+
+  Widget _getTabView(bool enable) {
+    return Container(
         child: ZefyrScaffold(
-          child: ZefyrEditor(
-            controller: _controller,
-            focusNode: _focusNode,
-            autofocus: false,
-            padding: EdgeInsets.only(top: 8, left: 16, right: 16),
+            child: ZefyrEditor(
+                controller: _controller,
+                focusNode: _focusNode,
+                autofocus: false,
+                enabled: enable,
+                padding: EdgeInsets.only(top: 8, left: 16, right: 16))));
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
+  List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
+    return <Widget>[
+      SliverAppBar(
+        centerTitle: true,
+        expandedHeight: 50.0,
+        backgroundColor: Colors.blue,
+        floating: false,
+        pinned: false,
+        flexibleSpace: FlexibleSpaceBar(
+          title: Text("Edit note"),
+        ),
+      )
+    ];
+  }
+
+  Widget _getTabBar() {
+    return Container(
+      height: 72,
+      child: PhysicalModel(
+        elevation: 6,
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: TabBar(
+            controller: tabController,
+            tabs: <Widget>[
+              Tab(
+                child: Text(
+                  "Edit",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  "Preview",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 48.0),
-        child: FloatingActionButton(
-          child: Icon(Icons.save),
-          onPressed: () {
-            _saveNote();
-            showToast(
-              "Save Success!",
-              position: ToastPosition.bottom,
-              textPadding: EdgeInsets.all(12),
-            );
-          },
-        ),
+    );
+  }
+
+  Widget _getFloatingButtun() {
+    if (!this.showFloatButton) {
+      return null;
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 48.0),
+      child: FloatingActionButton(
+        child: Icon(Icons.save),
+        onPressed: () {
+          _saveNote();
+          showToast(
+            "Save Success!",
+            position: ToastPosition.bottom,
+            textPadding: EdgeInsets.all(12),
+          );
+        },
       ),
     );
   }
