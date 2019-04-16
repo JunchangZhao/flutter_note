@@ -3,6 +3,7 @@ import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/home_page.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:oktoast/oktoast.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(height: 15.0),
                   buildPasswordTextField(context),
                   SizedBox(height: 15.0),
-                  buildPasswordTextField(context),
+                  buildConfirmTextField(context),
                   SizedBox(height: 60.0),
                   buildRegisterButton(context),
                   SizedBox(height: 20.0),
@@ -92,8 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
             if (_formKey.currentState.validate()) {
               ///只有输入的内容符合要求通过才会到达此处
               _formKey.currentState.save();
-              //TODO 执行登录方法
-              print('email:$_email , assword:$_password');
+              register();
             }
           },
           shape: StadiumBorder(
@@ -107,7 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextFormField buildPasswordTextField(BuildContext context) {
     return TextFormField(
       onSaved: (String value) => _password = value,
-      obscureText: false,
+      obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
           return '请输入密码';
@@ -122,10 +122,10 @@ class _RegisterPageState extends State<RegisterPage> {
   TextFormField buildConfirmTextField(BuildContext context) {
     return TextFormField(
       onSaved: (String value) => _confirmPasswd = value,
-      obscureText: false,
+      obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
-          return '请输入密码';
+          return '请子再次输入密码';
         }
       },
       decoration: InputDecoration(
@@ -172,5 +172,18 @@ class _RegisterPageState extends State<RegisterPage> {
         style: TextStyle(fontSize: 42.0, color: Colors.blue),
       ),
     );
+  }
+
+  void register() {
+    if (_password != _confirmPasswd) {
+      showToast(
+        "密码不一致，请确认！",
+        textPadding: EdgeInsets.all(12),
+        position: ToastPosition.bottom,
+      );
+      return;
+    }
+
+    print("jack");
   }
 }
