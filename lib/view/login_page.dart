@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/sputils.dart';
+import 'package:flutter_app/view/forget_passwd_page.dart';
 import 'package:flutter_app/view/home_page.dart';
 import 'package:flutter_app/view/register_page.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
@@ -119,7 +120,10 @@ class _LoginPageState extends State<LoginPage> {
             style: TextStyle(fontSize: 14.0, color: Colors.grey),
           ),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (context) => ForgetPasswdPage()));
           },
         ),
       ),
