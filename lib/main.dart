@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/view/home_page.dart';
+import 'package:flutter_app/view/splash_page.dart';
 import 'package:oktoast/oktoast.dart';
 
 void main() => runApp(MyApp());
@@ -13,13 +13,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: _gotoNext(),
+        home: SplashPage(),
       ),
     );
   }
-
-  _gotoNext() {
-    return MyHomePage(title: 'Flutter Note');
-  }
 }
-

@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SPKeys {
   static SPKeys NUMBER = SPKeys("number", 0);
+  static SPKeys ACCOUNT_NAME = SPKeys("account_name", "");
 
   String key;
   Object defaultValue;
@@ -19,9 +20,8 @@ class SPKeys {
     SpUtlis.set(key, defaultValue);
   }
 
-
   Future<int> getInt() async {
-      return await SpUtlis.get(key) as int;
+    return await SpUtlis.get(key) as int;
   }
 
   Future<double> getDouble() async {
