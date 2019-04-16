@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/home_page.dart';
-import 'package:flutter_app/view/register_page.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_svg/svg.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
-  String _email, _password;
-  bool _isObscure = true;
+  String _email, _password, _confirmPasswd;
   Color _eyeColor;
 
   @override
@@ -36,18 +34,19 @@ class _LoginPageState extends State<LoginPage> {
                     height: 100.0,
                     width: 100,
                     child: SvgPicture.asset(
-                      "icons/login.svg",
+                      "icons/register.svg",
                       color: Colors.blue,
                     ),
                   ),
-                  SizedBox(height: 40.0),
+                  SizedBox(height: 30.0),
                   buildEmailTextField(),
-                  SizedBox(height: 30.0),
+                  SizedBox(height: 15.0),
                   buildPasswordTextField(context),
-                  buildForgetPasswordText(context),
+                  SizedBox(height: 15.0),
+                  buildPasswordTextField(context),
                   SizedBox(height: 60.0),
-                  buildLoginButton(context),
-                  SizedBox(height: 30.0),
+                  buildRegisterButton(context),
+                  SizedBox(height: 20.0),
                   buildRegisterText(context),
                 ],
               ),
@@ -62,17 +61,14 @@ class _LoginPageState extends State<LoginPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('没有账号？'),
+            Text('已有账号? '),
             GestureDetector(
               child: Text(
-                '点击注册',
+                '登陆',
                 style: TextStyle(color: Colors.green),
               ),
               onTap: () {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => RegisterPage()));
+                Navigator.pop(context);
               },
             ),
           ],
@@ -81,14 +77,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Align buildLoginButton(BuildContext context) {
+  Align buildRegisterButton(BuildContext context) {
     return Align(
       child: SizedBox(
         height: 45.0,
         width: 270.0,
         child: RaisedButton(
           child: Text(
-            'Login',
+            'Register',
             style: Theme.of(context).primaryTextTheme.headline,
           ),
           color: Colors.blue,
@@ -108,48 +104,33 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Padding buildForgetPasswordText(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: FlatButton(
-          child: Text(
-            '忘记密码？',
-            style: TextStyle(fontSize: 14.0, color: Colors.grey),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-    );
-  }
-
   TextFormField buildPasswordTextField(BuildContext context) {
     return TextFormField(
       onSaved: (String value) => _password = value,
-      obscureText: _isObscure,
+      obscureText: false,
       validator: (String value) {
         if (value.isEmpty) {
           return '请输入密码';
         }
       },
       decoration: InputDecoration(
-          labelText: 'Password',
-          suffixIcon: IconButton(
-              icon: Icon(
-                Icons.remove_red_eye,
-                color: _eyeColor,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isObscure = !_isObscure;
-                  _eyeColor = _isObscure
-                      ? Colors.grey
-                      : Theme.of(context).iconTheme.color;
-                });
-              })),
+        labelText: 'Password',
+      ),
+    );
+  }
+
+  TextFormField buildConfirmTextField(BuildContext context) {
+    return TextFormField(
+      onSaved: (String value) => _confirmPasswd = value,
+      obscureText: false,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return '请输入密码';
+        }
+      },
+      decoration: InputDecoration(
+        labelText: 'Password',
+      ),
     );
   }
 
@@ -187,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Text(
-        'Login',
+        'Register',
         style: TextStyle(fontSize: 42.0, color: Colors.blue),
       ),
     );

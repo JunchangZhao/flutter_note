@@ -4,25 +4,14 @@ import 'package:flutter_app/view/home_page.dart';
 import 'package:flutter_app/view/login_page.dart';
 import 'package:flutter_svg/svg.dart';
 
-class SplashPage extends StatefulWidget {
-  @override
-  _SplashPageState createState() => _SplashPageState();
-}
-
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     SPKeys.ACCOUNT_NAME.getString().then((value) {
       if (value == null || value.isEmpty) {
-        Navigator.pop(context);
-        Navigator.push(
-            context, new MaterialPageRoute(builder: (context) => LoginPage()));
+        Navigator.of(context).pushReplacementNamed('/LoginPage');
       } else {
-        Navigator.pop(context);
-        Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => MyHomePage(title: 'Flutter Note')));
+        Navigator.of(context).pushReplacementNamed('/MainPage');
       }
     });
     super.initState();
@@ -43,4 +32,9 @@ class _SplashPageState extends State<SplashPage> {
       color: Colors.blue,
     );
   }
+}
+
+class SplashPage extends StatefulWidget {
+  @override
+  _SplashPageState createState() => _SplashPageState();
 }

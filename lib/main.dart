@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/view/home_page.dart';
+import 'package:flutter_app/view/login_page.dart';
 import 'package:flutter_app/view/splash_page.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -14,6 +16,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: SplashPage(),
+        routes: {
+          '/MainPage': (ctx) => MyHomePage(),
+          '/LoginPage': (ctx) => LoginPage(),
+        },
       ),
     );
   }

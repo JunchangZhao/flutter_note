@@ -56,7 +56,8 @@ flutter:
   assets:
    - icons/notebook.svg
    - icons/emptyNote.svg
-
+   - icons/login.svg
+   - icons/register.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
