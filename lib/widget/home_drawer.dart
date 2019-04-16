@@ -38,13 +38,13 @@ class HomeDrawer extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
+              Navigator.pop(context);
               Navigator.push(
                   context,
                   new MaterialPageRoute(
                       builder: (context) => TrashNotePage())).then((value) {
                 this.fun();
               });
-              Navigator.pop(context);
             },
             child: ListTile(
               leading: Icon(
@@ -63,9 +63,9 @@ class HomeDrawer extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
+              Navigator.pop(context);
               Navigator.push(context,
                   new MaterialPageRoute(builder: (context) => SettingPage()));
-              Navigator.pop(context);
             },
             child: ListTile(
               leading: Icon(
