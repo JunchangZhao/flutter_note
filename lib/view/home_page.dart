@@ -6,6 +6,7 @@ import 'package:flutter_app/view/edit_note_page.dart';
 import 'package:flutter_app/widget/home_drawer.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_app/widget/note_list_item.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:oktoast/oktoast.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -80,23 +81,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-          child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: _getAllNotes,
-                child: ScrollConfiguration(
-                  child: buildNotesListView(),
-                  behavior: ListBehavior(),
-                ),
-              ),
-            ),
-          ],
-        ),
-      )),
+      body: Center(child: _getHomeBody()),
       drawer: Drawer(
         child: HomeDrawer(() {
           getAllNotes();
@@ -148,5 +133,42 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             ),
           );
         });
+  }
+
+  _getHomeBody() {
+    return Stack(children: <Widget>[
+      _getBackground(),
+      Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: _getAllNotes,
+                child: ScrollConfiguration(
+                  child: buildNotesListView(),
+                  behavior: ListBehavior(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ]);
+  }
+
+  _getBackground() {
+    if (this.notes == null || this.notes.length == 0) {
+      return Center(
+        child: SizedBox(
+          width: 100,
+          height: 100,
+          child: SvgPicture.asset(
+            "icons/emptyNote.svg",
+          ),
+        ),
+      );
+    }
+    return Container();
   }
 }

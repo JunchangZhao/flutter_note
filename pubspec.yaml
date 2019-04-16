@@ -55,6 +55,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
    - icons/notebook.svg
+   - icons/emptyNote.svg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

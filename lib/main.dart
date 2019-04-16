@@ -13,9 +13,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: _gotoNext(),
       ),
     );
+  }
+
+  _gotoNext() {
+    return MyHomePage(title: 'Flutter Note');
   }
 }
 
