@@ -91,7 +91,7 @@ class $zh_CN extends S {
   @override
   String get restore => "恢复";
   @override
-  String get edit => "编剧";
+  String get edit => "编辑";
   @override
   String get email_err => "请输入正确的邮箱地址";
   @override
