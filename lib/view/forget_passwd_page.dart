@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/home_page.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
@@ -56,13 +57,12 @@ class _ForgetPasswdPageState extends State<ForgetPasswdPage> {
         width: 270.0,
         child: RaisedButton(
           child: Text(
-            'Retrieve Password',
+            S.of(context).retrieve_password,
             style: Theme.of(context).primaryTextTheme.headline,
           ),
           color: Colors.blue,
           onPressed: () {
             if (_formKey.currentState.validate()) {
-              ///只有输入的内容符合要求通过才会到达此处
               _formKey.currentState.save();
               getPasswd();
             }
@@ -78,13 +78,13 @@ class _ForgetPasswdPageState extends State<ForgetPasswdPage> {
   TextFormField buildEmailTextField() {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: 'Emall Address',
+        labelText: S.of(context).emall_address,
       ),
       validator: (String value) {
         var emailReg = RegExp(
             r"[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?");
         if (!emailReg.hasMatch(value)) {
-          return '请输入正确的邮箱地址';
+          return S.of(context).email_err;
         }
       },
       onSaved: (String value) => _email = value,
@@ -109,7 +109,7 @@ class _ForgetPasswdPageState extends State<ForgetPasswdPage> {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Text(
-        'Retrieve password',
+        S.of(context).retrieve_password,
         style: TextStyle(fontSize: 30.0, color: Colors.blue),
       ),
     );

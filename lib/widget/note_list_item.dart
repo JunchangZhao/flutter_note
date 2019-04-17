@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/db/note.dart';
-import 'package:flutter_app/utils/date_format_base.dart';
 import 'package:flutter_app/utils/utils.dart';
 import 'dart:convert';
 
@@ -34,7 +34,9 @@ class _NoteListItemState extends State<NoteListItem> {
                   Row(
                     children: <Widget>[
                       Text(
-                        note.title == "\n" ? "Undefined" : note.title,
+                        note.title == "\n"
+                            ? S.of(context).undefined
+                            : note.title,
                         style: TextStyle(
                           fontSize: 22,
                         ),

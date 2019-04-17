@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/presenters/note_presenter.dart';
 import 'package:flutter_app/utils/utils.dart';
@@ -38,7 +39,7 @@ class _TrashNotePageState extends State<TrashNotePage> {
             SimpleDialogOption(
               child: Center(
                   child: new Text(
-                'Restore',
+                S.of(context).restore,
                 style: TextStyle(fontSize: 20),
               )),
               onPressed: () {
@@ -51,7 +52,7 @@ class _TrashNotePageState extends State<TrashNotePage> {
             SimpleDialogOption(
               child: Center(
                   child: new Text(
-                'Delete',
+                S.of(context).delete,
                 style: TextStyle(fontSize: 20),
               )),
               onPressed: () {
@@ -70,7 +71,7 @@ class _TrashNotePageState extends State<TrashNotePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Trash"),
+        title: Text(S.of(context).trash),
       ),
       body: Stack(
         children: <Widget>[
@@ -88,7 +89,7 @@ class _TrashNotePageState extends State<TrashNotePage> {
                       child: ListTile(
                         title: Text(
                           (this.notes[index].title == "\n"
-                              ? "Undefined"
+                              ? S.of(context).undefined
                               : this.notes[index].title),
                           style: TextStyle(
                             fontSize: 22,

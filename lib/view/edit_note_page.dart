@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/presenters/note_presenter.dart';
 import 'package:zefyr/zefyr.dart';
@@ -128,7 +129,7 @@ class _EditNotePage extends State<EditNotePage>
         floating: false,
         pinned: false,
         flexibleSpace: FlexibleSpaceBar(
-          title: Text("Edit note"),
+          title: Text(S.of(context).edit_note),
         ),
       )
     ];
@@ -147,7 +148,7 @@ class _EditNotePage extends State<EditNotePage>
             tabs: <Widget>[
               Tab(
                 child: Text(
-                  "Edit",
+                  S.of(context).edit,
                   style: TextStyle(
                     color: Colors.blue,
                     fontSize: 16,
@@ -156,7 +157,7 @@ class _EditNotePage extends State<EditNotePage>
               ),
               Tab(
                 child: Text(
-                  "Preview",
+                  S.of(context).preview,
                   style: TextStyle(
                     color: Colors.blue,
                     fontSize: 16,
@@ -181,7 +182,7 @@ class _EditNotePage extends State<EditNotePage>
         onPressed: () {
           _saveNote();
           showToast(
-            "Save Success!",
+            S.of(context).save_success,
             position: ToastPosition.bottom,
             textPadding: EdgeInsets.all(12),
           );

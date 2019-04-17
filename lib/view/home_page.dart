@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/presenters/note_presenter.dart';
 import 'package:flutter_app/router/custome_router.dart';
 import 'package:flutter_app/model/db/note.dart';
@@ -76,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter Note"),
+        title: Text(S.of(context).app_name),
       ),
       body: Center(child: _getHomeBody()),
       drawer: Drawer(
@@ -86,7 +87,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNote,
-        tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
@@ -103,11 +103,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               Scaffold.of(context).showSnackBar(new SnackBar(
                 content: Row(
                   children: <Widget>[
-                    Expanded(child: Text("Note is dismissed")),
+                    Expanded(child: Text(S.of(context).note_removed)),
                     GestureDetector(
                       onTap: _undoDelete,
                       child: Text(
-                        "undo",
+                        S.of(context).undo,
                         style: TextStyle(
                           color: Colors.green,
                           fontSize: 18,

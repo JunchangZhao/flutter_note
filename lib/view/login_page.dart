@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/forget_passwd_page.dart';
 import 'package:flutter_app/view/home_page.dart';
@@ -63,10 +64,10 @@ class _LoginPageState extends State<LoginPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('没有账号？'),
+            Text(S.of(context).no_account),
             GestureDetector(
               child: Text(
-                '点击注册',
+                S.of(context).top_register,
                 style: TextStyle(color: Colors.green),
               ),
               onTap: () {
@@ -89,13 +90,12 @@ class _LoginPageState extends State<LoginPage> {
         width: 270.0,
         child: RaisedButton(
           child: Text(
-            'Login',
+            S.of(context).login,
             style: Theme.of(context).primaryTextTheme.headline,
           ),
           color: Colors.blue,
           onPressed: () {
             if (_formKey.currentState.validate()) {
-              ///只有输入的内容符合要求通过才会到达此处
               _formKey.currentState.save();
               login();
             }
@@ -115,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
         alignment: Alignment.centerRight,
         child: FlatButton(
           child: Text(
-            '忘记密码？',
+            S.of(context).forget_passwd,
             style: TextStyle(fontSize: 14.0, color: Colors.grey),
           ),
           onPressed: () {
@@ -135,11 +135,11 @@ class _LoginPageState extends State<LoginPage> {
       obscureText: _isObscure,
       validator: (String value) {
         if (value.isEmpty) {
-          return '请输入密码';
+          return S.of(context).input_passwd;
         }
       },
       decoration: InputDecoration(
-          labelText: 'Password',
+          labelText: S.of(context).password,
           suffixIcon: IconButton(
               icon: Icon(
                 Icons.remove_red_eye,
@@ -159,13 +159,13 @@ class _LoginPageState extends State<LoginPage> {
   TextFormField buildEmailTextField() {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: 'Emall Address',
+        labelText: S.of(context).emall_address,
       ),
       validator: (String value) {
         var emailReg = RegExp(
             r"[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?");
         if (!emailReg.hasMatch(value)) {
-          return '请输入正确的邮箱地址';
+          return S.of(context).email_err;
         }
       },
       onSaved: (String value) => _email = value,
@@ -190,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Text(
-        'Login',
+        S.of(context).login,
         style: TextStyle(fontSize: 42.0, color: Colors.blue),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/view/setting_page.dart';
 import 'package:flutter_app/view/trash_note_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,7 +31,7 @@ class HomeDrawer extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Fltter Note",
+                  S.of(context).app_name,
                   style: TextStyle(color: Colors.white, fontSize: 28),
                 ),
               ],
@@ -52,7 +53,7 @@ class HomeDrawer extends StatelessWidget {
                 color: Colors.blue,
               ),
               title: Text(
-                "Go to Trash",
+                S.of(context).go_to_trash,
                 style: TextStyle(fontSize: 18, color: Colors.black54),
               ),
               trailing: Icon(
@@ -73,7 +74,7 @@ class HomeDrawer extends StatelessWidget {
                 color: Colors.blue,
               ),
               title: Text(
-                "Settings",
+                S.of(context).settings,
                 style: TextStyle(fontSize: 18, color: Colors.black54),
               ),
               trailing: Icon(
