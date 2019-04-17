@@ -4,6 +4,7 @@ import 'package:flutter_app/presenters/note_presenter.dart';
 import 'package:flutter_app/utils/utils.dart';
 import 'package:flutter_app/widget/custom_simple_dialog.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:oktoast/oktoast.dart';
 
 class TrashNotePage extends StatefulWidget {
@@ -71,40 +72,45 @@ class _TrashNotePageState extends State<TrashNotePage> {
       appBar: AppBar(
         title: Text("Trash"),
       ),
-      body: ScrollConfiguration(
-        behavior: ListBehavior(),
-        child: ListView.builder(
-            itemCount: notes == null ? 0 : this.notes.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Column(children: [
-                GestureDetector(
-                  onLongPress: () {
-                    _showAction(this.notes[index]);
-                  },
-                  child: ListTile(
-                    title: Text(
-                      (this.notes[index].title == "\n"
-                          ? "Undefined"
-                          : this.notes[index].title),
-                      style: TextStyle(
-                        fontSize: 22,
+      body: Stack(
+        children: <Widget>[
+          _getBackground(),
+          ScrollConfiguration(
+            behavior: ListBehavior(),
+            child: ListView.builder(
+                itemCount: notes == null ? 0 : this.notes.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(children: [
+                    GestureDetector(
+                      onLongPress: () {
+                        _showAction(this.notes[index]);
+                      },
+                      child: ListTile(
+                        title: Text(
+                          (this.notes[index].title == "\n"
+                              ? "Undefined"
+                              : this.notes[index].title),
+                          style: TextStyle(
+                            fontSize: 22,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        subtitle: Text(
+                          Utils.getSubTitle(this.notes[index]),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                          maxLines: 2,
+                        ),
                       ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
                     ),
-                    subtitle: Text(
-                      Utils.getSubTitle(this.notes[index]),
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
-                      ),
-                      maxLines: 2,
-                    ),
-                  ),
-                ),
-              ]);
-            }),
+                  ]);
+                }),
+          ),
+        ],
       ),
     );
   }
@@ -115,5 +121,20 @@ class _TrashNotePageState extends State<TrashNotePage> {
 
   _delete(Note note) {
     NotePresenter.realDeleteNote(note);
+  }
+
+  _getBackground() {
+    if (this.notes == null || this.notes.length == 0) {
+      return Center(
+        child: SizedBox(
+          width: 100,
+          height: 100,
+          child: SvgPicture.asset(
+            "icons/trash.svg",
+          ),
+        ),
+      );
+    }
+    return Container();
   }
 }

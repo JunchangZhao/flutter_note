@@ -10,7 +10,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:oktoast/oktoast.dart';
 
 class MyHomePage extends StatefulWidget {
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -110,8 +109,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       child: Text(
                         "undo",
                         style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white70,
+                          color: Colors.green,
+                          fontSize: 18,
                           decoration: TextDecoration.underline,
                         ),
                       ),

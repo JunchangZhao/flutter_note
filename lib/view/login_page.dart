@@ -97,8 +97,7 @@ class _LoginPageState extends State<LoginPage> {
             if (_formKey.currentState.validate()) {
               ///只有输入的内容符合要求通过才会到达此处
               _formKey.currentState.save();
-              //TODO 执行登录方法
-              print('email:$_email , assword:$_password');
+              login();
             }
           },
           shape: StadiumBorder(
@@ -195,5 +194,10 @@ class _LoginPageState extends State<LoginPage> {
         style: TextStyle(fontSize: 42.0, color: Colors.blue),
       ),
     );
+  }
+
+  void login() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MyHomePage()));
   }
 }
