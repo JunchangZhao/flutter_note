@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/presenters/note_presenter.dart';
+import 'package:flutter_app/utils/sputils.dart';
 import 'package:zefyr/zefyr.dart';
 import 'package:oktoast/oktoast.dart';
 import 'dart:convert';
@@ -52,13 +53,14 @@ class _EditNotePage extends State<EditNotePage>
     });
   }
 
-  void _saveNote() {
+  Future _saveNote() async {
     if (this.isEdit) {
       Note note = Note(
           this.document.toDelta()[0].data,
           json.encode(this.document),
           widget.note.createTime,
-          DateTime.now().millisecondsSinceEpoch);
+          DateTime.now().millisecondsSinceEpoch,
+          await SPKeys.ACCOUNT_NAME.getString());
       if (this.document.length == 1 &&
           this.document.toDelta()[0].data == "\n") {
         NotePresenter.deleteNote(note);
@@ -71,6 +73,7 @@ class _EditNotePage extends State<EditNotePage>
         return;
       }
       this.isEdit = true;
+      print("jack");
       NotePresenter.addNote(
               this.document.toDelta()[0].data, json.encode(this.document))
           .then((note) {

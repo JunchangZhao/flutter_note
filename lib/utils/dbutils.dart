@@ -26,7 +26,8 @@ class NoteSqlite {
             $columnContext TEXT, 
             $columnCreateTime INTEGER, 
             $columnModifyTime INTEGER,
-            $columnIsDeleted BOOL)
+            $columnIsDeleted BOOL,
+            $columnUser TEXT)
           ''');
     });
   }

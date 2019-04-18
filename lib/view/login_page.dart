@@ -7,7 +7,7 @@ import 'package:flutter_app/presenters/account_presenter.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/forget_passwd_page.dart';
 import 'package:flutter_app/view/register_page.dart';
-import 'package:flutter_app/widget/LoadingDialog.dart';
+import 'package:flutter_app/widget/loading_dialog.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:oktoast/oktoast.dart';
@@ -218,6 +218,7 @@ class _LoginPageState extends State<LoginPage> {
   Future _login() async {
     LoginResult result = await accountPresenter.login(_email, _password);
     if (result != null && result.isSuccess) {
+      print(result.data.isSuccess);
       if (result.data.isSuccess) {
         SPKeys.ACCOUNT_NAME.set(_email);
         await Navigator.pop(context);

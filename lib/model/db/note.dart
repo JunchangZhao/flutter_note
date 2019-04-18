@@ -6,6 +6,7 @@ final String columnContext = "context";
 final String columnCreateTime = "createTime";
 final String columnModifyTime = "modifyTime";
 final String columnIsDeleted = "isDeleted";
+final String columnUser = "user";
 
 class Note {
   String title;
@@ -13,13 +14,16 @@ class Note {
   int createTime;
   int modifyTime;
   bool isDeleted;
+  String user;
 
-  Note(String titile, String context, int createTime, int modifyTime) {
+  Note(String titile, String context, int createTime, int modifyTime,
+      String user) {
     this.title = titile;
     this.context = context;
     this.createTime = createTime;
     this.modifyTime = modifyTime;
     this.isDeleted = false;
+    this.user = user;
   }
 
   Map<String, dynamic> toMap() {
@@ -28,7 +32,8 @@ class Note {
       columnContext: context,
       columnCreateTime: createTime,
       columnModifyTime: modifyTime,
-      columnIsDeleted: isDeleted
+      columnIsDeleted: isDeleted,
+      columnUser: user
     };
     return map;
   }
@@ -39,5 +44,6 @@ class Note {
     createTime = map[columnCreateTime];
     modifyTime = map[columnModifyTime];
     isDeleted = map[columnIsDeleted] != 0;
+    user = map[columnUser];
   }
 }

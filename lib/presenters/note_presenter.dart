@@ -1,5 +1,6 @@
 import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/utils/dbutils.dart';
+import 'package:flutter_app/utils/sputils.dart';
 
 class NotePresenter {
   static Future<List<Note>> getAllNotes(bool trash) async {
@@ -11,7 +12,8 @@ class NotePresenter {
   static Future<Note> addNote(String title, String context) async {
     NoteSqlite sqlite = await NoteSqlite.getInstance();
     int time = DateTime.now().millisecondsSinceEpoch;
-    Note note = Note(title, context, time, time);
+    String user = await SPKeys.ACCOUNT_NAME.getString();
+    Note note = Note(title, context, time, time, user);
     await sqlite.insert(note);
     return note;
   }
@@ -31,6 +33,7 @@ class NotePresenter {
   static Future<int> updateNote(Note note) async {
     NoteSqlite sqlite = await NoteSqlite.getInstance();
     var result = await sqlite.update(note);
+    print(result);
     return result;
   }
 

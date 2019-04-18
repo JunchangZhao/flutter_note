@@ -6,7 +6,7 @@ import 'package:flutter_app/model/net/register_result.dart';
 import 'package:flutter_app/presenters/account_presenter.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/home_page.dart';
-import 'package:flutter_app/widget/LoadingDialog.dart';
+import 'package:flutter_app/widget/loading_dialog.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:oktoast/oktoast.dart';
