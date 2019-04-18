@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SPKeys {
   static SPKeys NUMBER = SPKeys("number", 0);
   static SPKeys ACCOUNT_NAME = SPKeys("account_name", "");
+  static SPKeys JWT = SPKeys("jwt", "");
 
   String key;
   Object defaultValue;

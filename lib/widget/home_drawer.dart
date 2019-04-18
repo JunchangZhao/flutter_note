@@ -6,8 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeDrawer extends StatelessWidget {
   Function() fun;
+  var accountName;
 
-  HomeDrawer(this.fun);
+  HomeDrawer(this.fun, this.accountName);
 
   @override
   Widget build(BuildContext context) {
@@ -105,8 +106,8 @@ class HomeDrawer extends StatelessWidget {
                       ),
                     ),
                     title: Text(
-                      "13218019903",
-                      style: TextStyle(fontSize: 18, color: Colors.black54),
+                      this.accountName,
+                      style: TextStyle(fontSize: 16, color: Colors.black54),
                     ),
                   ),
                 ),

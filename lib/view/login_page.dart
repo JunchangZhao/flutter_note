@@ -1,11 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
+import 'package:flutter_app/model/net/login_result.dart';
+import 'package:flutter_app/presenters/account_presenter.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/forget_passwd_page.dart';
-import 'package:flutter_app/view/home_page.dart';
 import 'package:flutter_app/view/register_page.dart';
+import 'package:flutter_app/widget/LoadingDialog.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:oktoast/oktoast.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   String _email, _password;
   bool _isObscure = true;
   Color _eyeColor;
+  AccountPresenter accountPresenter = AccountPresenter();
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +203,38 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void login() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MyHomePage()));
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return LoadingDialog(
+            requestCallBack: _login(),
+            outsideDismiss: false,
+            loadingText: S.of(context).login,
+          );
+        });
+  }
+
+  Future _login() async {
+    LoginResult result = await accountPresenter.login(_email, _password);
+    if (result != null && result.isSuccess) {
+      if (result.data.isSuccess) {
+        SPKeys.ACCOUNT_NAME.set(_email);
+        await Navigator.pop(context);
+        await Navigator.of(context).pushReplacementNamed('/MainPage');
+      } else {
+        showToast(
+          S.of(context).the_account_with_password_was_not_found,
+          position: ToastPosition.bottom,
+          textPadding: EdgeInsets.all(12),
+        );
+      }
+    } else {
+      showToast(
+        S.of(context).network_err,
+        position: ToastPosition.bottom,
+        textPadding: EdgeInsets.all(12),
+      );
+    }
   }
 }

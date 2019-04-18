@@ -46,6 +46,7 @@ class S implements WidgetsLocalizations {
   String get retrieve_password => "Retrieve Password";
   String get save_success => "Save Success!";
   String get settings => "Settings";
+  String get the_account_with_password_was_not_found => "The account with password was not found.";
   String get the_email_has_been_registed => "The Email has been registed!";
   String get top_register => "Register";
   String get trash => "Trash";
@@ -125,6 +126,8 @@ class $zh_CN extends S {
   String get note_removed => "笔记已删除";
   @override
   String get go_to_trash => "回收站";
+  @override
+  String get the_account_with_password_was_not_found => "账号或密码错误！";
   @override
   String get register => "注册";
 }

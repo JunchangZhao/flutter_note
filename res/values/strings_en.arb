@@ -30,5 +30,6 @@
   "the_email_has_been_registed": "The Email has been registed!",
   "email_is_invalid": "Email is invalid!",
   "password_is_invalid": "Password is invalid!",
-  "network_err": "Network Err!"
+  "network_err": "Network Err!",
+  "the_account_with_password_was_not_found": "The account with password was not found."
 }

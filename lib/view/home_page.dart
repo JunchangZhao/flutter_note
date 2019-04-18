@@ -9,6 +9,7 @@ import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_app/widget/note_list_item.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:flutter_app/utils/sputils.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+  String accountName = "";
   List<Note> notes;
 
   Note removeNote;
@@ -24,6 +26,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     getAllNotes();
+    SPKeys.ACCOUNT_NAME.getString().then((value) {
+      setState(() {
+        this.accountName = value;
+      });
+    });
   }
 
   getAllNotes() {
@@ -83,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       drawer: Drawer(
         child: HomeDrawer(() {
           getAllNotes();
-        }),
+        }, accountName),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNote,

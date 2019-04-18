@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_app/model/net/login_result.dart';
 import 'package:flutter_app/model/net/register_result.dart';
 import 'package:flutter_app/utils/netutils.dart';
+import 'package:flutter_app/utils/sputils.dart';
 
 class AccountPresenter {
   Future<LoginResult> login(String email, String pwd) async {
@@ -16,5 +17,10 @@ class AccountPresenter {
         .postHttp("/register", {"email": email, "passwd": pwd});
     RegisterResult result = RegisterResult.fromJson(response.data);
     return result;
+  }
+
+  logout() {
+    SPKeys.JWT.set("");
+    SPKeys.ACCOUNT_NAME.set("");
   }
 }
