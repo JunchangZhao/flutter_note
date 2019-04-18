@@ -13,12 +13,12 @@ class SPKeys {
     this.defaultValue = value;
   }
 
-  void set(Object value) {
-    SpUtlis.set(key, value);
+  Future set(Object value) async {
+    await SpUtlis.set(key, value);
   }
 
-  void reset() {
-    SpUtlis.set(key, defaultValue);
+  Future reset() async {
+    await SpUtlis.set(key, defaultValue);
   }
 
   Future<int> getInt() async {

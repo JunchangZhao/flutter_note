@@ -19,8 +19,8 @@ class AccountPresenter {
     return result;
   }
 
-  logout() {
-    SPKeys.JWT.set("");
-    SPKeys.ACCOUNT_NAME.set("");
+  Future logout() async {
+    await SPKeys.JWT.set("");
+    await SPKeys.ACCOUNT_NAME.set("");
   }
 }
