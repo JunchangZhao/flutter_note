@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
+import 'package:flutter_app/model/net/register_result.dart';
+import 'package:flutter_app/presenters/account_presenter.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/home_page.dart';
+import 'package:flutter_app/widget/LoadingDialog.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:oktoast/oktoast.dart';
@@ -14,7 +19,12 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   String _email, _password, _confirmPasswd;
-  Color _eyeColor;
+  AccountPresenter accountPresenter = AccountPresenter();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,6 +192,59 @@ class _RegisterPageState extends State<RegisterPage> {
         position: ToastPosition.bottom,
       );
       return;
+    }
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return LoadingDialog(
+            requestCallBack: _register(),
+            outsideDismiss: false,
+            loadingText: S.of(context).register,
+          );
+        });
+  }
+
+  Future _register() async {
+    RegisterResult result = await accountPresenter.register(_email, _password);
+    if (result != null && result.isSuccess) {
+      if (result.data.isSuccess) {
+        showToast(
+          S.of(context).register_success,
+          position: ToastPosition.bottom,
+          textPadding: EdgeInsets.all(12),
+        );
+        Timer.periodic(Duration(seconds: 1), (timer) {
+          Navigator.pop(context);
+        });
+      } else {
+        if (!result.data.isAccountNotDuplicate) {
+          showToast(
+            S.of(context).the_email_has_been_registed,
+            position: ToastPosition.bottom,
+            textPadding: EdgeInsets.all(12),
+          );
+        } else if (!result.data.isAccountValid) {
+          showToast(
+            S.of(context).email_is_invalid,
+            textPadding: EdgeInsets.all(12),
+            position: ToastPosition.bottom,
+          );
+        } else if (result.data.isPasswdValid) {
+          showToast(
+            S.of(context).password_is_invalid,
+            textPadding: EdgeInsets.all(12),
+            position: ToastPosition.bottom,
+          );
+        }
+      }
+    } else {
+      showToast(
+        S.of(context).network_err,
+        position: ToastPosition.bottom,
+        textPadding: EdgeInsets.all(12),
+      );
     }
   }
 }

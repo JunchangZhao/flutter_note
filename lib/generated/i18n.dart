@@ -25,6 +25,7 @@ class S implements WidgetsLocalizations {
   String get edit => "Edit";
   String get edit_note => "Edit note";
   String get email_err => "email is invalid";
+  String get email_is_invalid => "Email is invalid!";
   String get emall_address => "Emall Address";
   String get forget_passwd => "Forget the password?";
   String get go_to_trash => "Go to Trash";
@@ -32,16 +33,20 @@ class S implements WidgetsLocalizations {
   String get input_passwd_again => "Please input passwd again";
   String get input_password => "Please input a password";
   String get login => "Login";
+  String get network_err => "Network Err!";
   String get no_account => "No account?  ";
   String get note_removed => "Note is dismissed";
   String get password => "Password";
   String get password_inconsistency => "Password inconsistency, please confirm!";
+  String get password_is_invalid => "Password is invalid!";
   String get preview => "Preview";
   String get register => "Register";
+  String get register_success => "Register Success!";
   String get restore => "Restore";
   String get retrieve_password => "Retrieve Password";
   String get save_success => "Save Success!";
   String get settings => "Settings";
+  String get the_email_has_been_registed => "The Email has been registed!";
   String get top_register => "Register";
   String get trash => "Trash";
   String get undefined => "Undefined";
@@ -61,7 +66,11 @@ class $zh_CN extends S {
   @override
   String get preview => "预览";
   @override
+  String get the_email_has_been_registed => "邮箱已被注册!";
+  @override
   String get already_register => "已有账号";
+  @override
+  String get register_success => "注册成功!";
   @override
   String get edit_note => "编辑笔记";
   @override
@@ -72,6 +81,8 @@ class $zh_CN extends S {
   String get login => "登陆";
   @override
   String get delete => "删除";
+  @override
+  String get network_err => "网络错误";
   @override
   String get undefined => "未编辑";
   @override
@@ -94,6 +105,10 @@ class $zh_CN extends S {
   String get edit => "编辑";
   @override
   String get email_err => "请输入正确的邮箱地址";
+  @override
+  String get email_is_invalid => "邮箱地址无效!";
+  @override
+  String get password_is_invalid => "密码无效，请重新输入!";
   @override
   String get trash => "回收站";
   @override

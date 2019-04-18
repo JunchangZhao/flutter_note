@@ -25,5 +25,10 @@
   "trash": "Trash",
   "undefined": "Undefined",
   "go_to_trash": "Go to Trash",
-  "settings": "Settings"
+  "settings": "Settings",
+  "register_success": "Register Success!",
+  "the_email_has_been_registed": "The Email has been registed!",
+  "email_is_invalid": "Email is invalid!",
+  "password_is_invalid": "Password is invalid!",
+  "network_err": "Network Err!"
 }

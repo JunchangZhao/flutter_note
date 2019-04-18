@@ -25,5 +25,10 @@
   "trash": "回收站",
   "undefined": "未编辑",
   "go_to_trash": "回收站",
-  "settings": "设置"
+  "settings": "设置",
+  "register_success": "注册成功!",
+  "the_email_has_been_registed": "邮箱已被注册!",
+  "email_is_invalid": "邮箱地址无效!",
+  "password_is_invalid": "密码无效，请重新输入!",
+  "network_err": "网络错误"
 }
