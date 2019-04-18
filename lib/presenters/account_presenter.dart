@@ -8,6 +8,9 @@ class AccountPresenter {
   Future<LoginResult> login(String email, String pwd) async {
     Response response = await NetUtils.getInstance()
         .postHttp("/login", {"email": email, "passwd": pwd});
+    if (response == null) {
+      return LoginResult(false, null);
+    }
     LoginResult result = LoginResult.fromJson(response.data);
     return result;
   }
@@ -15,6 +18,9 @@ class AccountPresenter {
   Future<RegisterResult> register(String email, String pwd) async {
     Response response = await NetUtils.getInstance()
         .postHttp("/register", {"email": email, "passwd": pwd});
+    if (response == null) {
+      return RegisterResult(false, null);
+    }
     RegisterResult result = RegisterResult.fromJson(response.data);
     return result;
   }
