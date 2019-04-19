@@ -1,14 +1,15 @@
+import 'package:flutter_app/utils/sputils.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter_app/model/db/note.dart';
 
-class NoteSqlite {
-  static NoteSqlite instance;
+class NoteDao {
+  static NoteDao instance;
   Database db;
 
-  static Future<NoteSqlite> getInstance() async {
+  static Future<NoteDao> getInstance() async {
     if (instance == null) {
-      instance = new NoteSqlite();
+      instance = new NoteDao();
       await instance.openSqlite();
     }
     return instance;
@@ -51,8 +52,8 @@ class NoteSqlite {
           columnIsDeleted
         ],
         orderBy: columnModifyTime,
-        where: '$columnIsDeleted = ?',
-        whereArgs: [trash ? 1 : 0]);
+        where: '$columnIsDeleted = ? and $columnUser = ?',
+        whereArgs: [trash ? 1 : 0, await SPKeys.ACCOUNT_NAME.getString()]);
 
     if (maps == null || maps.length == 0) {
       return null;
