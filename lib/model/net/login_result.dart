@@ -6,13 +6,13 @@ part 'login_result.g.dart';
 @JsonSerializable()
 class LoginResult extends Object with _$LoginResultSerializerMixin{
 
-  @JsonKey(name: 'isSuccess')
   bool isSuccess;
 
-  @JsonKey(name: 'data')
   Data data;
 
-  LoginResult(this.isSuccess,this.data,);
+  String msg;
+
+  LoginResult(this.isSuccess,this.data,this.msg,);
 
   factory LoginResult.fromJson(Map<String, dynamic> srcJson) => _$LoginResultFromJson(srcJson);
 
@@ -22,10 +22,11 @@ class LoginResult extends Object with _$LoginResultSerializerMixin{
 @JsonSerializable()
 class Data extends Object with _$DataSerializerMixin{
 
-  @JsonKey(name: 'isSuccess')
   bool isSuccess;
 
-  Data(this.isSuccess,);
+  String jwt;
+
+  Data(this.isSuccess,this.jwt,);
 
   factory Data.fromJson(Map<String, dynamic> srcJson) => _$DataFromJson(srcJson);
 

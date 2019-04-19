@@ -22,7 +22,13 @@ class _LoginPageState extends State<LoginPage> {
   String _email, _password;
   bool _isObscure = true;
   Color _eyeColor;
-  AccountPresenter accountPresenter = AccountPresenter();
+  AccountPresenter accountPresenter;
+
+  @override
+  void initState() {
+    accountPresenter = AccountPresenter(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -221,6 +227,7 @@ class _LoginPageState extends State<LoginPage> {
       print(result.data.isSuccess);
       if (result.data.isSuccess) {
         SPKeys.ACCOUNT_NAME.set(_email);
+        SPKeys.JWT.set(result.data.jwt);
         await Navigator.pop(context);
         await Navigator.of(context).pushReplacementNamed('/MainPage');
       } else {

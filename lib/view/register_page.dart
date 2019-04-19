@@ -19,10 +19,11 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   String _email, _password, _confirmPasswd;
-  AccountPresenter accountPresenter = AccountPresenter();
+  AccountPresenter accountPresenter;
 
   @override
   void initState() {
+    accountPresenter = AccountPresenter(context);
     super.initState();
   }
 

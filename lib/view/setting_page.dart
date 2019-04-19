@@ -7,7 +7,13 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  AccountPresenter accountPresenter = AccountPresenter();
+  AccountPresenter accountPresenter;
+
+  @override
+  void initState() {
+    accountPresenter = AccountPresenter(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
