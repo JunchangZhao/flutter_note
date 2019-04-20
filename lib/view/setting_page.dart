@@ -14,23 +14,42 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   String _sort = "";
+  String _font = "";
 
   AccountPresenter accountPresenter;
   SettingPresenter settingPresenter;
 
+  List _sortList;
+  List _fontList;
+
   @override
   void initState() {
+    super.initState();
     accountPresenter = AccountPresenter(context);
     settingPresenter = SettingPresenter(context);
-    SPKeys.SETTING_SORT.getString().then((value) {
-      if (value == null) {
-        value = S.of(context).modify_time;
-      }
+
+    SPKeys.SETTING_SORT.getInt().then((value) {
+      this._sortList = [
+        S.of(context).modify_time,
+        S.of(context).create_time,
+        S.of(context).title
+      ];
       setState(() {
-        this._sort = value;
+        this._sort = _sortList[value];
       });
     });
-    super.initState();
+
+
+    SPKeys.SETTING_FONT_SIZE.getInt().then((value) {
+      this._fontList = [
+        S.of(context).small,
+        S.of(context).normal,
+        S.of(context).large
+      ];
+      setState(() {
+        this._font = this._fontList[value];
+      });
+    });
   }
 
   @override
@@ -52,6 +71,8 @@ class _SettingPageState extends State<SettingPage> {
             child: ListView(
               children: <Widget>[
                 buildSortItem(),
+                buildFontItem(),
+//                buildVersionItem(),
               ],
             ),
           ),
@@ -63,20 +84,31 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   Widget buildSortItem() {
-    List sortList = [
-      S.of(context).modify_time,
-      S.of(context).create_time,
-      S.of(context).title
-    ];
     return buildItem(S.of(context).sort, this._sort, () {
-      DialogChoose.showSortChooseDialg(context, sortList, (index) {
-        SPKeys.SETTING_SORT.set(sortList[index]);
+      DialogChoose.showSortChooseDialg(context, this._sortList, (index) {
+        SPKeys.SETTING_SORT.set(index);
         setState(() {
-          this._sort = sortList[index];
+          this._sort = this._sortList[index];
         });
         eventBus.fire(SortChangeEvent());
       });
     });
+  }
+
+  buildFontItem() {
+    return buildItem(S.of(context).font_size, this._font, () {
+      DialogChoose.showSortChooseDialg(context, this._fontList, (index) {
+        SPKeys.SETTING_FONT_SIZE.set(index);
+        setState(() {
+          this._font = this._fontList[index];
+        });
+        eventBus.fire(FontChangeEvent());
+      });
+    });
+  }
+
+  buildVersionItem() {
+    buildItem(S.of(context).version, "1.0", () {});
   }
 
   Widget buildLogoutItem(String title, onClick) {

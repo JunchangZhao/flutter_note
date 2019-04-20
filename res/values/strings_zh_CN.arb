@@ -36,5 +36,10 @@
   "sort": "排序",
   "create_time": "创建时间",
   "modify_time": "修改时间",
-  "title": "标题"
+  "title": "标题",
+  "small": "小号",
+  "normal": "正常",
+  "large": "大号",
+  "font_size": "字体大小",
+  "version": "版本号:"
 }

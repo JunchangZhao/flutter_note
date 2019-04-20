@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
+import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/home_page.dart';
 import 'package:flutter_app/view/login_page.dart';
 import 'package:flutter_app/view/splash_page.dart';
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OKToast(
       child: MaterialApp(
-        onGenerateTitle: (context){                                              // 此处
+        onGenerateTitle: (context) {
+          // 此处
           return S.of(context).app_name;
         },
         theme: ThemeData(

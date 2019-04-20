@@ -26,7 +26,10 @@ class DialogChoose {
                               },
                               child: ListTile(
                                 dense: true,
-                                title: Text(titles[index]),
+                                title: Text(
+                                  titles[index],
+                                  style: TextStyle(fontSize: 18),
+                                ),
                               ),
                             ),
                           ),

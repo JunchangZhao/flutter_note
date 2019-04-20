@@ -36,5 +36,10 @@
   "sort": "Sort",
   "create_time": "Create Time",
   "modify_time": "Modify Time",
-  "title": "Title"
+  "title": "Title",
+  "small": "Small",
+  "normal": "Normal",
+  "large": "Large",
+  "font_size": "Font Size",
+  "version": "Version:"
 }

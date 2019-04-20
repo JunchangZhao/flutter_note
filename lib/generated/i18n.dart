@@ -28,16 +28,19 @@ class S implements WidgetsLocalizations {
   String get email_err => "email is invalid";
   String get email_is_invalid => "Email is invalid!";
   String get emall_address => "Emall Address";
+  String get font_size => "Font Size";
   String get forget_passwd => "Forget the password?";
   String get go_to_trash => "Go to Trash";
   String get input_passwd => "Please input a password";
   String get input_passwd_again => "Please input passwd again";
   String get input_password => "Please input a password";
+  String get large => "Large";
   String get login => "Login";
   String get logout => "Logout";
   String get modify_time => "Modify Time";
   String get network_err => "Network Err!";
   String get no_account => "No account?  ";
+  String get normal => "Normal";
   String get note_removed => "Note is dismissed";
   String get password => "Password";
   String get password_inconsistency => "Password inconsistency, please confirm!";
@@ -49,6 +52,7 @@ class S implements WidgetsLocalizations {
   String get retrieve_password => "Retrieve Password";
   String get save_success => "Save Success!";
   String get settings => "Settings";
+  String get small => "Small";
   String get sort => "Sort";
   String get the_account_with_password_was_not_found => "The account with password was not found.";
   String get the_email_has_been_registed => "The Email has been registed!";
@@ -57,6 +61,7 @@ class S implements WidgetsLocalizations {
   String get trash => "Trash";
   String get undefined => "Undefined";
   String get undo => "undo";
+  String get version => "Version:";
 }
 
 class $en extends S {
@@ -74,6 +79,8 @@ class $zh_CN extends S {
   @override
   String get the_email_has_been_registed => "邮箱已被注册!";
   @override
+  String get small => "小号";
+  @override
   String get already_register => "已有账号";
   @override
   String get register_success => "注册成功!";
@@ -83,6 +90,8 @@ class $zh_CN extends S {
   String get top_register => "点击注册";
   @override
   String get modify_time => "修改时间";
+  @override
+  String get font_size => "字体大小";
   @override
   String get input_password => "清输入密码";
   @override
@@ -110,11 +119,15 @@ class $zh_CN extends S {
   @override
   String get settings => "设置";
   @override
+  String get normal => "正常";
+  @override
   String get password_inconsistency => "密码不一致，请确认！";
   @override
   String get restore => "恢复";
   @override
   String get create_time => "创建时间";
+  @override
+  String get large => "大号";
   @override
   String get edit => "编辑";
   @override
@@ -123,6 +136,8 @@ class $zh_CN extends S {
   String get email_is_invalid => "邮箱地址无效!";
   @override
   String get sort => "排序";
+  @override
+  String get version => "版本号:";
   @override
   String get password_is_invalid => "密码无效，请重新输入!";
   @override

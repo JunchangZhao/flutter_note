@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SPKeys {
   static SPKeys NUMBER = SPKeys("number", 0);
   static SPKeys ACCOUNT_NAME = SPKeys("account_name", "");
   static SPKeys JWT = SPKeys("jwt", "");
-  static SPKeys SETTING_SORT = SPKeys("setting_sort", "");
+  static SPKeys SETTING_SORT = SPKeys("setting_sort", 0);
+  static SPKeys SETTING_FONT_SIZE = SPKeys("setting_font_size", 0);
 
   String key;
   Object defaultValue;
@@ -23,23 +26,43 @@ class SPKeys {
   }
 
   Future<int> getInt() async {
-    return await SpUtlis.get(key) as int;
+    var result = await SpUtlis.get(key) as int;
+    if (result == null) {
+      return defaultValue;
+    }
+    return result;
   }
 
   Future<double> getDouble() async {
-    return await SpUtlis.get(key) as double;
+    var result = await SpUtlis.get(key) as double;
+    if (result == null) {
+      return defaultValue;
+    }
+    return result;
   }
 
   Future<bool> getBoolean() async {
-    return await SpUtlis.get(key) as bool;
+    var result = await SpUtlis.get(key) as bool;
+    if (result == null) {
+      return defaultValue;
+    }
+    return result;
   }
 
   Future<List<String>> getList() async {
-    return await SpUtlis.get(key) as List<String>;
+    var result = await SpUtlis.get(key) as List<String>;
+    if (result == null) {
+      return defaultValue;
+    }
+    return result;
   }
 
   Future<String> getString() async {
-    return await SpUtlis.get(key) as String;
+    var result = await SpUtlis.get(key) as String;
+    if (result == null) {
+      return defaultValue;
+    }
+    return result;
   }
 }
 
