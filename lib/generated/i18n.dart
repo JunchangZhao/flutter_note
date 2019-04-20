@@ -35,6 +35,7 @@ class S implements WidgetsLocalizations {
   String get input_password => "Please input a password";
   String get login => "Login";
   String get logout => "Logout";
+  String get modify_time => "Modify Time";
   String get network_err => "Network Err!";
   String get no_account => "No account?  ";
   String get note_removed => "Note is dismissed";
@@ -51,6 +52,7 @@ class S implements WidgetsLocalizations {
   String get sort => "Sort";
   String get the_account_with_password_was_not_found => "The account with password was not found.";
   String get the_email_has_been_registed => "The Email has been registed!";
+  String get title => "Title";
   String get top_register => "Register";
   String get trash => "Trash";
   String get undefined => "Undefined";
@@ -80,9 +82,13 @@ class $zh_CN extends S {
   @override
   String get top_register => "点击注册";
   @override
+  String get modify_time => "修改时间";
+  @override
   String get input_password => "清输入密码";
   @override
   String get login => "登陆";
+  @override
+  String get title => "标题";
   @override
   String get delete => "删除";
   @override
@@ -108,7 +114,7 @@ class $zh_CN extends S {
   @override
   String get restore => "恢复";
   @override
-  String get create_time => "Create Time";
+  String get create_time => "创建时间";
   @override
   String get edit => "编辑";
   @override

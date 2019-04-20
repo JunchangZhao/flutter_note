@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/presenters/account_presenter.dart';
 import 'package:flutter_app/presenters/setting_presenter.dart';
+import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/dialog_choose.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 
@@ -11,6 +12,8 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  String _sort = "";
+
   AccountPresenter accountPresenter;
   SettingPresenter settingPresenter;
 
@@ -18,6 +21,14 @@ class _SettingPageState extends State<SettingPage> {
   void initState() {
     accountPresenter = AccountPresenter(context);
     settingPresenter = SettingPresenter(context);
+    SPKeys.SETTING_SORT.getString().then((value) {
+      if (value == null) {
+        value = S.of(context).modify_time;
+      }
+      setState(() {
+        this._sort = value;
+      });
+    });
     super.initState();
   }
 
@@ -25,7 +36,7 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text(S.of(context).settings),
       ),
       body: buildBody(),
     );
@@ -35,21 +46,35 @@ class _SettingPageState extends State<SettingPage> {
     return Column(
       children: <Widget>[
         Expanded(
-          child: ListView(
-            children: <Widget>[
-              buildItem(S.of(context).sort, S.of(context).create_time, () {
-                DialogChoose.showSortChooseDialg(
-                    context, ["Modify Time", "Create Time", "Time"], (index) {
-                  print(index);
-                });
-              }),
-            ],
+          child: ScrollConfiguration(
+            behavior: ListBehavior(),
+            child: ListView(
+              children: <Widget>[
+                buildSortItem(),
+              ],
+            ),
           ),
         ),
         Divider(),
         buildLogoutItem(S.of(context).logout, logout)
       ],
     );
+  }
+
+  Widget buildSortItem() {
+    List sortList = [
+      S.of(context).modify_time,
+      S.of(context).create_time,
+      S.of(context).title
+    ];
+    return buildItem(S.of(context).sort, this._sort, () {
+      DialogChoose.showSortChooseDialg(context, sortList, (index) {
+        SPKeys.SETTING_SORT.set(sortList[index]);
+        setState(() {
+          this._sort = sortList[index];
+        });
+      });
+    });
   }
 
   Widget buildLogoutItem(String title, onClick) {

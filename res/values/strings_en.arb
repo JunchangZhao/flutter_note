@@ -34,5 +34,7 @@
   "the_account_with_password_was_not_found": "The account with password was not found.",
   "logout": "Logout",
   "sort": "Sort",
-  "create_time": "Create Time"
+  "create_time": "Create Time",
+  "modify_time": "Modify Time",
+  "title": "Title"
 }
