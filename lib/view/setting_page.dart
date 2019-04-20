@@ -71,7 +71,7 @@ class _SettingPageState extends State<SettingPage> {
               children: <Widget>[
                 buildSortItem(),
                 buildFontItem(),
-//                buildVersionItem(),
+                buildVersionItem(),
               ],
             ),
           ),
@@ -107,7 +107,7 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   buildVersionItem() {
-    buildItem(S.of(context).version, "1.0", () {});
+    return buildItem(S.of(context).version, "1.0", () {});
   }
 
   Widget buildLogoutItem(String title, onClick) {
