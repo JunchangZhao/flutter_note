@@ -7,7 +7,7 @@ class SPKeys {
   static SPKeys ACCOUNT_NAME = SPKeys("account_name", "");
   static SPKeys JWT = SPKeys("jwt", "");
   static SPKeys SETTING_SORT = SPKeys("setting_sort", 0);
-  static SPKeys SETTING_FONT_SIZE = SPKeys("setting_font_size", 0);
+  static SPKeys SETTING_FONT_SIZE = SPKeys("setting_font_size", 1);
 
   String key;
   Object defaultValue;

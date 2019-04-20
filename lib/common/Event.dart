@@ -4,4 +4,7 @@ EventBus eventBus = new EventBus();
 
 class SortChangeEvent {}
 
-class FontChangeEvent {}
+class FontChangeEvent {
+  int fontType;
+  FontChangeEvent(this.fontType);
+}

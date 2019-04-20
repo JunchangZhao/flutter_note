@@ -39,7 +39,6 @@ class _SettingPageState extends State<SettingPage> {
       });
     });
 
-
     SPKeys.SETTING_FONT_SIZE.getInt().then((value) {
       this._fontList = [
         S.of(context).small,
@@ -102,7 +101,7 @@ class _SettingPageState extends State<SettingPage> {
         setState(() {
           this._font = this._fontList[index];
         });
-        eventBus.fire(FontChangeEvent());
+        eventBus.fire(FontChangeEvent(index));
       });
     });
   }

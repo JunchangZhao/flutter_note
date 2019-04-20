@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/Event.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/db/note.dart';
+import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/utils/utils.dart';
-import 'dart:convert';
-
-import 'package:zefyr/zefyr.dart';
 
 class NoteListItem extends StatefulWidget {
   Note note;
@@ -19,6 +18,22 @@ class _NoteListItemState extends State<NoteListItem> {
   Note note;
 
   _NoteListItemState(this.note);
+
+  int _font = 0;
+
+  @override
+  void initState() {
+    SPKeys.SETTING_FONT_SIZE.getInt().then((value) {
+      this._font = value;
+    });
+    super.initState();
+    eventBus.on<FontChangeEvent>().listen((event) {
+      print(event.fontType);
+      setState(() {
+        this._font = event.fontType;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +53,7 @@ class _NoteListItemState extends State<NoteListItem> {
                             ? S.of(context).undefined
                             : note.title,
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: getSubTitleSize() + 4.0,
                         ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -53,18 +68,22 @@ class _NoteListItemState extends State<NoteListItem> {
                             Utils.getSubTitle(note),
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: getSubTitleSize(),
                               color: Colors.grey,
                             ),
                             maxLines: 2,
                           ),
                         ),
                         Align(
-                          child: Text(
-                            Utils.getCreateTime(note.modifyTime),
-                            style:
-                                TextStyle(color: Colors.black45, fontSize: 14),
-                            textAlign: TextAlign.right,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              Utils.getCreateTime(note.modifyTime),
+                              style: TextStyle(
+                                  color: Colors.black45,
+                                  fontSize: getSubTitleSize() - 2 * this._font),
+                              textAlign: TextAlign.right,
+                            ),
                           ),
                           alignment: FractionalOffset.bottomRight,
                         ),
@@ -74,11 +93,17 @@ class _NoteListItemState extends State<NoteListItem> {
                 ],
               ),
             ),
-            height: 80,
+            height: 80.0 + this._font * 10,
           ),
-          Divider(),
+          Divider(
+            height: 1,
+          ),
         ],
       ),
     );
+  }
+
+  getSubTitleSize() {
+    return 12.0 + _font * 4;
   }
 }
