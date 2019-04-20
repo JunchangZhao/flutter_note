@@ -24,11 +24,12 @@ class _NoteListItemState extends State<NoteListItem> {
   @override
   void initState() {
     SPKeys.SETTING_FONT_SIZE.getInt().then((value) {
-      this._font = value;
+      setState(() {
+        this._font = value;
+      });
     });
     super.initState();
     eventBus.on<FontChangeEvent>().listen((event) {
-      print(event.fontType);
       setState(() {
         this._font = event.fontType;
       });
