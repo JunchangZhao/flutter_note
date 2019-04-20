@@ -3,6 +3,7 @@ import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/presenters/note_presenter.dart';
 import 'package:flutter_app/utils/sputils.dart';
+import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:zefyr/zefyr.dart';
 import 'package:oktoast/oktoast.dart';
 import 'dart:convert';
@@ -85,21 +86,24 @@ class _EditNotePage extends State<EditNotePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: _sliverBuilder,
-        body: Column(
-          children: <Widget>[
-            _getTabBar(),
-            Expanded(
-              child: TabBarView(
-                controller: tabController,
-                children: <Widget>[
-                  _getTabView(true),
-                  _getTabView(false),
-                ],
-              ),
-            )
-          ],
+      body: ScrollConfiguration(
+        behavior: ListBehavior(),
+        child: NestedScrollView(
+          headerSliverBuilder: _sliverBuilder,
+          body: Column(
+            children: <Widget>[
+              _getTabBar(),
+              Expanded(
+                child: TabBarView(
+                  controller: tabController,
+                  children: <Widget>[
+                    _getTabView(true),
+                    _getTabView(false),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: _getFloatingButtun(),

@@ -31,5 +31,8 @@
   "email_is_invalid": "邮箱地址无效!",
   "password_is_invalid": "密码无效，请重新输入!",
   "network_err": "网络错误",
-  "the_account_with_password_was_not_found": "账号或密码错误！"
+  "the_account_with_password_was_not_found": "账号或密码错误！",
+  "logout": "退出",
+  "sort": "排序",
+  "create_time": "Create Time"
 }
