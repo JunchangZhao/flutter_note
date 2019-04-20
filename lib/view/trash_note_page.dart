@@ -23,7 +23,7 @@ class _TrashNotePageState extends State<TrashNotePage> {
   }
 
   void _getAllTrash() {
-    NotePresenter.getAllNotes(true).then((list) {
+    NotePresenter.getAllNotes(context, true).then((list) {
       setState(() {
         this.notes = list;
       });

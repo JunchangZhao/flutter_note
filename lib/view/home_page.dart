@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/Event.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/presenters/note_presenter.dart';
 import 'package:flutter_app/router/custome_router.dart';
@@ -31,10 +32,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         this.accountName = value;
       });
     });
+    eventBus.on<SortChangeEvent>().listen((event) {
+      getAllNotes();
+    });
   }
 
   getAllNotes() {
-    NotePresenter.getAllNotes(false).then((list) {
+    NotePresenter.getAllNotes(context, false).then((list) {
       setState(() {
         this.notes = list;
       });

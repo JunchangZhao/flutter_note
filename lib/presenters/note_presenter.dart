@@ -1,11 +1,26 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/dao/note_dao.dart';
 import 'package:flutter_app/utils/sputils.dart';
 
 class NotePresenter {
-  static Future<List<Note>> getAllNotes(bool trash) async {
+  static Future<List<Note>> getAllNotes(
+      BuildContext context, bool trash) async {
     NoteDao sqlite = await NoteDao.getInstance();
-    var result = await sqlite.queryAll(trash);
+    List<Note> result = await sqlite.queryAll(trash);
+    String sortType = await SPKeys.SETTING_SORT.getString();
+    result.sort((left, right) {
+      if (sortType == S.of(context).create_time) {
+        return left.createTime.compareTo(right.createTime);
+      }
+      if (sortType == S.of(context).modify_time) {
+        return left.modifyTime.compareTo(right.modifyTime);
+      }
+      if (sortType == S.of(context).title) {
+        return left.title.compareTo(right.title);
+      }
+    });
     return result;
   }
 

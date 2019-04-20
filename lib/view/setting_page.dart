@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/Event.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/presenters/account_presenter.dart';
 import 'package:flutter_app/presenters/setting_presenter.dart';
@@ -73,6 +74,7 @@ class _SettingPageState extends State<SettingPage> {
         setState(() {
           this._sort = sortList[index];
         });
+        eventBus.fire(SortChangeEvent());
       });
     });
   }
