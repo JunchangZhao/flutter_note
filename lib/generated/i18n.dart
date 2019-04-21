@@ -21,7 +21,9 @@ class S implements WidgetsLocalizations {
 
   String get already_register => "Already register ";
   String get app_name => "Flutter Note";
+  String get auto_upload_notes => "Auto Upload Notes";
   String get cancel => "Cancel";
+  String get compress_note_item => "Compress note item";
   String get confirm => "Confirm";
   String get confirm_logout => "Confirm logout?";
   String get create_time => "Create Time";
@@ -112,6 +114,8 @@ class $zh_CN extends S {
   @override
   String get emall_address => "邮箱地址";
   @override
+  String get auto_upload_notes => "自动上传笔记";
+  @override
   String get undo => "撤销";
   @override
   String get save_success => "保存成功!";
@@ -145,6 +149,8 @@ class $zh_CN extends S {
   String get sort => "排序";
   @override
   String get version => "版本号:";
+  @override
+  String get compress_note_item => "压缩笔记列表";
   @override
   String get password_is_invalid => "密码无效，请重新输入!";
   @override

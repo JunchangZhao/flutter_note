@@ -44,5 +44,7 @@
   "version": "Version:",
   "confirm_logout": "Confirm logout?",
   "cancel": "Cancel",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "compress_note_item": "Compress note item",
+  "auto_upload_notes": "Auto Upload Notes"
 }

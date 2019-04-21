@@ -44,5 +44,7 @@
   "version": "版本号:",
   "confirm_logout": "确认推出?",
   "cancel": "取消",
-  "confirm": "确认"
+  "confirm": "确认",
+  "compress_note_item": "压缩笔记列表",
+  "auto_upload_notes": "自动上传笔记"
 }
