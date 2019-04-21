@@ -20,7 +20,7 @@ class NoteDao {
     String path = join(databasesPath, dbName);
     db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
-      await db.execute('''
+          await db.execute('''
           CREATE TABLE $tableName (
             $columnId INTEGER PRIMARY KEY autoincrement, 
             $columnTitile TEXT, 
@@ -30,7 +30,7 @@ class NoteDao {
             $columnIsDeleted BOOL,
             $columnUser TEXT)
           ''');
-    });
+        });
   }
 
   close() async {
@@ -69,6 +69,7 @@ class NoteDao {
 
   Future<int> delete(Note note) async {
     note.isDeleted = true;
+    print(note.user);
     return await db.update(tableName, note.toMap(),
         where: '$columnCreateTime = ?', whereArgs: [note.createTime]);
   }

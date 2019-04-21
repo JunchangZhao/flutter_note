@@ -9,17 +9,19 @@ class NotePresenter {
     NoteDao sqlite = await NoteDao.getInstance();
     List<Note> result = await sqlite.queryAll(trash);
     int sortType = await SPKeys.SETTING_SORT.getInt();
-    result.sort((left, right) {
-      if (sortType == 0) {
-        return left.modifyTime.compareTo(right.modifyTime);
-      }
-      if (sortType == 1) {
-        return left.createTime.compareTo(right.createTime);
-      }
-      if (sortType == 2) {
-        return left.title.compareTo(right.title);
-      }
-    });
+    if (result != null) {
+      result.sort((left, right) {
+        if (sortType == 0) {
+          return left.modifyTime.compareTo(right.modifyTime);
+        }
+        if (sortType == 1) {
+          return left.createTime.compareTo(right.createTime);
+        }
+        if (sortType == 2) {
+          return left.title.compareTo(right.title);
+        }
+      });
+    }
     return result;
   }
 
@@ -33,18 +35,21 @@ class NotePresenter {
   }
 
   static Future<int> deleteNote(Note note) async {
+    note.user = await SPKeys.ACCOUNT_NAME.getString();
     NoteDao sqlite = await NoteDao.getInstance();
     var result = await sqlite.delete(note);
     return result;
   }
 
   static Future<int> undoDeleteNote(Note note) async {
+    note.user = await SPKeys.ACCOUNT_NAME.getString();
     NoteDao sqlite = await NoteDao.getInstance();
     var result = await sqlite.undoDelete(note);
     return result;
   }
 
   static Future<int> updateNote(Note note) async {
+    note.user = await SPKeys.ACCOUNT_NAME.getString();
     NoteDao sqlite = await NoteDao.getInstance();
     var result = await sqlite.update(note);
     print(result);

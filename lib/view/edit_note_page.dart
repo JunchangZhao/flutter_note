@@ -74,7 +74,6 @@ class _EditNotePage extends State<EditNotePage>
         return;
       }
       this.isEdit = true;
-      print("jack");
       NotePresenter.addNote(
               this.document.toDelta()[0].data, json.encode(this.document))
           .then((note) {

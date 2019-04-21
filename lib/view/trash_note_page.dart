@@ -108,6 +108,9 @@ class _TrashNotePageState extends State<TrashNotePage> {
                         ),
                       ),
                     ),
+                    Divider(
+                      height: 1,
+                    ),
                   ]);
                 }),
           ),
