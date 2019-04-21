@@ -15,7 +15,7 @@
   "forget_passwd": "Forget the password?",
   "emall_address": "Emall Address",
   "retrieve_password": "Retrieve Password",
-  "already_register": "Already register",
+  "already_register": "Already register ",
   "register": "Register",
   "input_passwd_again": "Please input passwd again",
   "password_inconsistency": "Password inconsistency, please confirm!",
@@ -41,5 +41,8 @@
   "normal": "Normal",
   "large": "Large",
   "font_size": "Font Size",
-  "version": "Version:"
+  "version": "Version:",
+  "confirm_logout": "Confirm logout?",
+  "cancel": "Cancel",
+  "confirm": "Confirm"
 }

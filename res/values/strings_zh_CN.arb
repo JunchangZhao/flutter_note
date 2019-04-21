@@ -15,7 +15,7 @@
   "forget_passwd": "忘记密码？",
   "emall_address": "邮箱地址",
   "retrieve_password": "找回密码",
-  "already_register": "已有账号",
+  "already_register": "已有账号 ",
   "register": "注册",
   "input_passwd_again": "清再次输入密码",
   "password_inconsistency": "密码不一致，请确认！",
@@ -41,5 +41,8 @@
   "normal": "正常",
   "large": "大号",
   "font_size": "字体大小",
-  "version": "版本号:"
+  "version": "版本号:",
+  "confirm_logout": "确认推出?",
+  "cancel": "取消",
+  "confirm": "确认"
 }

@@ -125,10 +125,32 @@ class _SettingPageState extends State<SettingPage> {
   }
 
   logout() {
-    accountPresenter.logout().then((value) {
-      Navigator.pop(context);
-      Navigator.of(context).pushReplacementNamed('/LoginPage');
-    });
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (_) {
+          return AlertDialog(
+            content: Text(S.of(context).confirm_logout),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(S.of(context).cancel),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text(S.of(context).confirm),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  accountPresenter.logout().then((value) {
+                    Navigator.pop(context);
+                    Navigator.of(context).pushReplacementNamed('/LoginPage');
+                  });
+                },
+              ),
+            ],
+          );
+        });
   }
 
   Widget buildItem(String title, String trailing, Function onClick) {

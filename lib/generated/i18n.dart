@@ -19,8 +19,11 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
-  String get already_register => "Already register";
+  String get already_register => "Already register ";
   String get app_name => "Flutter Note";
+  String get cancel => "Cancel";
+  String get confirm => "Confirm";
+  String get confirm_logout => "Confirm logout?";
   String get create_time => "Create Time";
   String get delete => "Delete";
   String get edit => "Edit";
@@ -81,7 +84,9 @@ class $zh_CN extends S {
   @override
   String get small => "小号";
   @override
-  String get already_register => "已有账号";
+  String get cancel => "取消";
+  @override
+  String get already_register => "已有账号 ";
   @override
   String get register_success => "注册成功!";
   @override
@@ -121,6 +126,8 @@ class $zh_CN extends S {
   @override
   String get normal => "正常";
   @override
+  String get confirm_logout => "确认推出?";
+  @override
   String get password_inconsistency => "密码不一致，请确认！";
   @override
   String get restore => "恢复";
@@ -144,6 +151,8 @@ class $zh_CN extends S {
   String get trash => "回收站";
   @override
   String get input_passwd_again => "清再次输入密码";
+  @override
+  String get confirm => "确认";
   @override
   String get app_name => "我的笔记";
   @override
