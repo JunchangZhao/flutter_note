@@ -31,6 +31,8 @@ dependencies:
   oktoast: ^2.0.0
   flutter_svg: ^0.3.2
   event_bus: ^1.0.1
+  package_info: ^0.3.2+1
+
 
 
   flutter_localizations:

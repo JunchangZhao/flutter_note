@@ -8,6 +8,7 @@ class SPKeys {
   static SPKeys JWT = SPKeys("jwt", "");
   static SPKeys SETTING_SORT = SPKeys("setting_sort", 0);
   static SPKeys SETTING_FONT_SIZE = SPKeys("setting_font_size", 1);
+  static SPKeys COMPRESS_ITEM = SPKeys("compress_item", false);
 
   String key;
   Object defaultValue;

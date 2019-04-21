@@ -6,6 +6,7 @@ import 'package:flutter_app/presenters/setting_presenter.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/dialog_choose.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
+import 'package:package_info/package_info.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -15,6 +16,8 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   String _sort = "";
   String _font = "";
+  String _versionCode = "";
+  bool _compress = false;
 
   AccountPresenter accountPresenter;
   SettingPresenter settingPresenter;
@@ -49,6 +52,18 @@ class _SettingPageState extends State<SettingPage> {
         this._font = this._fontList[value];
       });
     });
+
+    PackageInfo.fromPlatform().then((pkgInfo) {
+      setState(() {
+        this._versionCode = pkgInfo.version;
+      });
+    });
+
+    SPKeys.COMPRESS_ITEM.getBoolean().then((value) {
+      setState(() {
+        this._compress = value;
+      });
+    });
   }
 
   @override
@@ -70,6 +85,7 @@ class _SettingPageState extends State<SettingPage> {
             child: ListView(
               children: <Widget>[
                 buildSortItem(),
+                buildCompressItem(),
                 buildFontItem(),
                 buildVersionItem(),
               ],
@@ -106,8 +122,35 @@ class _SettingPageState extends State<SettingPage> {
     });
   }
 
+  buildCompressItem() {
+    return buildSwitchItem("Compress note item", this._compress, (flag) {
+      SPKeys.COMPRESS_ITEM.set(flag);
+      eventBus.fire(CompressEvent(flag));
+    });
+  }
+
+  buildSwitchItem(String title, bool flag, Function onItemChanged) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 16.0,
+      ),
+      child: ListTile(
+        title: Text(
+          title,
+          style: TextStyle(fontSize: 16),
+        ),
+        trailing: Switch(
+          value: flag,
+          onChanged: (flag) {
+            onItemChanged(flag);
+          },
+        ),
+      ),
+    );
+  }
+
   buildVersionItem() {
-    return buildItem(S.of(context).version, "1.0", () {});
+    return buildItem(S.of(context).version, _versionCode, () {});
   }
 
   Widget buildLogoutItem(String title, onClick) {

@@ -8,3 +8,8 @@ class FontChangeEvent {
   int fontType;
   FontChangeEvent(this.fontType);
 }
+
+class CompressEvent{
+  bool flag;
+  CompressEvent(this.flag);
+}

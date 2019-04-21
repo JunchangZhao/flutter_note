@@ -16,6 +16,7 @@ class NoteListItem extends StatefulWidget {
 
 class _NoteListItemState extends State<NoteListItem> {
   Note note;
+  bool _isCompress = false;
 
   _NoteListItemState(this.note);
 
@@ -28,16 +29,60 @@ class _NoteListItemState extends State<NoteListItem> {
         this._font = value;
       });
     });
+    SPKeys.COMPRESS_ITEM.getBoolean().then((value) {
+      setState(() {
+        this._isCompress = value;
+      });
+    });
     super.initState();
     eventBus.on<FontChangeEvent>().listen((event) {
       setState(() {
         this._font = event.fontType;
       });
     });
+
+    eventBus.on<CompressEvent>().listen((event) {
+      setState(() {
+        this._isCompress = event.flag;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isCompress) {
+      return buildCompressItem(context);
+    } else {
+      return buildCompleteItem(context);
+    }
+  }
+
+  Column buildCompressItem(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: <Widget>[
+              Text(
+                note.title == "\n" ? S.of(context).undefined : note.title,
+                style: TextStyle(
+                  fontSize: getSubTitleSize() + 4.0,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ],
+          ),
+        ),
+        Divider(
+          height: 1,
+        )
+      ],
+    );
+  }
+
+  Container buildCompleteItem(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
