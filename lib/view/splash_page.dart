@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/HomePageDatas.dart';
+import 'package:flutter_app/presenters/note_presenter.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/home_page.dart';
 import 'package:flutter_app/view/login_page.dart';
@@ -11,7 +13,10 @@ class _SplashPageState extends State<SplashPage> {
       if (value == null || value.isEmpty) {
         Navigator.of(context).pushReplacementNamed('/LoginPage');
       } else {
-        Navigator.of(context).pushReplacementNamed('/MainPage');
+        NotePresenter.getAllNotes(context, false).then((list) {
+          homePageNoteList = list;
+          Navigator.of(context).pushReplacementNamed('/MainPage');
+        });
       }
     });
     super.initState();
