@@ -64,13 +64,15 @@ class _NoteListItemState extends State<NoteListItem> {
           padding: const EdgeInsets.all(12.0),
           child: Row(
             children: <Widget>[
-              Text(
-                note.title == "\n" ? S.of(context).undefined : note.title,
-                style: TextStyle(
-                  fontSize: getSubTitleSize() + 4.0,
+              Expanded(
+                child: Text(
+                  note.title == "\n" ? S.of(context).undefined : note.title,
+                  style: TextStyle(
+                    fontSize: getSubTitleSize() + 4.0,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
               ),
             ],
           ),
