@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/common/Event.dart';
+import 'package:flutter_app/common/event.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/presenters/account_presenter.dart';
 import 'package:flutter_app/presenters/setting_presenter.dart';
