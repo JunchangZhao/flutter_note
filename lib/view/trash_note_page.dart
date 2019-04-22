@@ -6,7 +6,6 @@ import 'package:flutter_app/utils/utils.dart';
 import 'package:flutter_app/widget/custom_simple_dialog.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:oktoast/oktoast.dart';
 
 class TrashNotePage extends StatefulWidget {
   @override
@@ -15,6 +14,7 @@ class TrashNotePage extends StatefulWidget {
 
 class _TrashNotePageState extends State<TrashNotePage> {
   List<Note> notes;
+  NotePresenter notePresenter = NotePresenter();
 
   @override
   void initState() {
@@ -23,7 +23,7 @@ class _TrashNotePageState extends State<TrashNotePage> {
   }
 
   void _getAllTrash() {
-    NotePresenter.getAllNotes(context, true).then((list) {
+    notePresenter.getAllNotes(context, true).then((list) {
       setState(() {
         this.notes = list;
       });
@@ -120,11 +120,11 @@ class _TrashNotePageState extends State<TrashNotePage> {
   }
 
   _restore(Note note) {
-    NotePresenter.undoDeleteNote(note);
+    notePresenter.undoDeleteNote(note);
   }
 
   _delete(Note note) {
-    NotePresenter.realDeleteNote(note);
+    notePresenter.realDeleteNote(note);
   }
 
   _getBackground() {

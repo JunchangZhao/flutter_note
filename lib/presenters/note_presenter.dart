@@ -2,12 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/dao/note_dao.dart';
 import 'package:flutter_app/utils/sputils.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/io.dart';
 
 class NotePresenter {
-  final WebSocketChannel channel =
-      IOWebSocketChannel.connect('ws://echo.websocket.org');
+
 
   Future<List<Note>> getAllNotes(BuildContext context, bool trash) async {
     NoteDao sqlite = await NoteDao.getInstance();
@@ -52,7 +49,7 @@ class NotePresenter {
     return result;
   }
 
-  static Future<int> updateNote(Note note) async {
+   Future<int> updateNote(Note note) async {
     note.user = await SPKeys.ACCOUNT_NAME.getString();
     NoteDao sqlite = await NoteDao.getInstance();
     var result = await sqlite.update(note);

@@ -25,6 +25,7 @@ class _EditNotePage extends State<EditNotePage>
   bool isEdit = false;
   TabController tabController;
   bool showFloatButton = true;
+  NotePresenter notePresenter = NotePresenter();
 
   @override
   void initState() {
@@ -64,9 +65,9 @@ class _EditNotePage extends State<EditNotePage>
           await SPKeys.ACCOUNT_NAME.getString());
       if (this.document.length == 1 &&
           this.document.toDelta()[0].data == "\n") {
-        NotePresenter.deleteNote(note);
+        notePresenter.deleteNote(note);
       } else {
-        NotePresenter.updateNote(note);
+        notePresenter.updateNote(note);
       }
     } else {
       if (this.document.length == 1 &&
@@ -74,7 +75,7 @@ class _EditNotePage extends State<EditNotePage>
         return;
       }
       this.isEdit = true;
-      NotePresenter.addNote(
+      notePresenter.addNote(
               this.document.toDelta()[0].data, json.encode(this.document))
           .then((note) {
         widget.note = note;

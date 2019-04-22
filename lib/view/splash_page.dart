@@ -5,13 +5,15 @@ import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_svg/svg.dart';
 
 class _SplashPageState extends State<SplashPage> {
+  NotePresenter notePresenter = NotePresenter();
+
   @override
   void initState() {
     SPKeys.ACCOUNT_NAME.getString().then((value) {
       if (value == null || value.isEmpty) {
         Navigator.of(context).pushReplacementNamed('/LoginPage');
       } else {
-        NotePresenter.getAllNotes(context, false).then((list) {
+        notePresenter.getAllNotes(context, false).then((list) {
           homePageNoteList = list;
           Navigator.of(context).pushReplacementNamed('/MainPage');
         });
