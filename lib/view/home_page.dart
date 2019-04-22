@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/common/event.dart';
 import 'package:flutter_app/common/common_datas.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/presenters/note_presenter.dart';
@@ -13,6 +12,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_app/utils/sputils.dart';
 
+
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -23,6 +23,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   List<Note> notes;
 
   Note removeNote;
+
+  NotePresenter notePresenter = NotePresenter();
 
   @override
   void initState() {
@@ -37,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   getAllNotes() {
-    NotePresenter.getAllNotes(context, false).then((list) {
+    notePresenter.getAllNotes(context, false).then((list) {
       setState(() {
         this.notes = list;
       });
@@ -65,13 +67,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void _removeNote(int index) {
     removeNote = this.notes[index];
     this.notes.removeAt(index);
-    NotePresenter.deleteNote(removeNote).then((result) {
+    notePresenter.deleteNote(removeNote).then((result) {
       getAllNotes();
     });
   }
 
   _undoDelete() {
-    NotePresenter.undoDeleteNote(removeNote).then((result) {
+    notePresenter.undoDeleteNote(removeNote).then((result) {
       getAllNotes();
     });
   }

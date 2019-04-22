@@ -32,7 +32,7 @@ dependencies:
   flutter_svg: ^0.3.2
   event_bus: ^1.0.1
   package_info: ^0.3.2+1
-
+  web_socket_channel: ^1.0.12
 
 
   flutter_localizations:

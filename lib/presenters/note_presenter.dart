@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/dao/note_dao.dart';
 import 'package:flutter_app/utils/sputils.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/io.dart';
 
 class NotePresenter {
-  static Future<List<Note>> getAllNotes(
-      BuildContext context, bool trash) async {
+  final WebSocketChannel channel =
+      IOWebSocketChannel.connect('ws://echo.websocket.org');
+
+  Future<List<Note>> getAllNotes(BuildContext context, bool trash) async {
     NoteDao sqlite = await NoteDao.getInstance();
     List<Note> result = await sqlite.queryAll(trash);
     int sortType = await SPKeys.SETTING_SORT.getInt();
@@ -25,7 +29,7 @@ class NotePresenter {
     return result;
   }
 
-  static Future<Note> addNote(String title, String context) async {
+  Future<Note> addNote(String title, String context) async {
     NoteDao sqlite = await NoteDao.getInstance();
     int time = DateTime.now().millisecondsSinceEpoch;
     String user = await SPKeys.ACCOUNT_NAME.getString();
@@ -34,14 +38,14 @@ class NotePresenter {
     return note;
   }
 
-  static Future<int> deleteNote(Note note) async {
+  Future<int> deleteNote(Note note) async {
     note.user = await SPKeys.ACCOUNT_NAME.getString();
     NoteDao sqlite = await NoteDao.getInstance();
     var result = await sqlite.delete(note);
     return result;
   }
 
-  static Future<int> undoDeleteNote(Note note) async {
+  Future<int> undoDeleteNote(Note note) async {
     note.user = await SPKeys.ACCOUNT_NAME.getString();
     NoteDao sqlite = await NoteDao.getInstance();
     var result = await sqlite.undoDelete(note);
@@ -56,7 +60,7 @@ class NotePresenter {
     return result;
   }
 
-  static Future<int> realDeleteNote(Note note) async {
+  Future<int> realDeleteNote(Note note) async {
     NoteDao sqlite = await NoteDao.getInstance();
     return await sqlite.realDelete(note.createTime);
   }
