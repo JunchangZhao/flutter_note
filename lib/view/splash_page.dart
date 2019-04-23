@@ -13,13 +13,17 @@ class _SplashPageState extends State<SplashPage> {
       if (value == null || value.isEmpty) {
         Navigator.of(context).pushReplacementNamed('/LoginPage');
       } else {
-        notePresenter.getAllNotes(context, false).then((list) {
-          homePageNoteList = list;
+        initDatas().then((value) {
           Navigator.of(context).pushReplacementNamed('/MainPage');
         });
       }
     });
     super.initState();
+  }
+
+  Future initDatas() async {
+    homePageNoteList = await notePresenter.getAllNotes(context, false);
+    jwt = await SPKeys.JWT.getString();
   }
 
   @override
