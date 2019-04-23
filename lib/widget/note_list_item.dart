@@ -6,19 +6,19 @@ import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/utils/utils.dart';
 
 class NoteListItem extends StatefulWidget {
-  Note note;
+  Note _note;
 
-  NoteListItem(this.note);
+  NoteListItem(this._note);
 
   @override
-  _NoteListItemState createState() => _NoteListItemState(this.note);
+  _NoteListItemState createState() => _NoteListItemState(this._note);
 }
 
 class _NoteListItemState extends State<NoteListItem> {
-  Note note;
+  Note _note;
   bool _isCompress = false;
 
-  _NoteListItemState(this.note);
+  _NoteListItemState(this._note);
 
   int _font = 0;
 
@@ -66,7 +66,7 @@ class _NoteListItemState extends State<NoteListItem> {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  note.title == "\n" ? S.of(context).undefined : note.title,
+                  _note.title == "\n" ? S.of(context).undefined : _note.title,
                   style: TextStyle(
                     fontSize: getSubTitleSize() + 4.0,
                   ),
@@ -97,9 +97,9 @@ class _NoteListItemState extends State<NoteListItem> {
                   Row(
                     children: <Widget>[
                       Text(
-                        note.title == "\n"
+                        _note.title == "\n"
                             ? S.of(context).undefined
-                            : note.title,
+                            : _note.title,
                         style: TextStyle(
                           fontSize: getSubTitleSize() + 4.0,
                         ),
@@ -113,7 +113,7 @@ class _NoteListItemState extends State<NoteListItem> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            Utils.getSubTitle(note),
+                            Utils.getSubTitle(_note),
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: getSubTitleSize(),
@@ -126,7 +126,7 @@ class _NoteListItemState extends State<NoteListItem> {
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: Text(
-                              Utils.getCreateTime(note.modifyTime),
+                              Utils.getCreateTime(_note.modifyTime),
                               style: TextStyle(
                                   color: Colors.black45,
                                   fontSize: getSubTitleSize() - 2 * this._font),

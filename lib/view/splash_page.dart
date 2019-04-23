@@ -5,7 +5,7 @@ import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_svg/svg.dart';
 
 class _SplashPageState extends State<SplashPage> {
-  NotePresenter notePresenter = NotePresenter();
+  NotePresenter _notePresenter = NotePresenter();
 
   @override
   void initState() {
@@ -22,7 +22,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future initDatas() async {
-    homePageNoteList = await notePresenter.getAllNotes(context, false);
+    homePageNoteList = await _notePresenter.getAllNotes(context, false);
     jwt = await SPKeys.JWT.getString();
   }
 

@@ -13,8 +13,8 @@ class TrashNotePage extends StatefulWidget {
 }
 
 class _TrashNotePageState extends State<TrashNotePage> {
-  List<Note> notes;
-  NotePresenter notePresenter = NotePresenter();
+  List<Note> _notes;
+  NotePresenter _notePresenter = NotePresenter();
 
   @override
   void initState() {
@@ -23,9 +23,9 @@ class _TrashNotePageState extends State<TrashNotePage> {
   }
 
   void _getAllTrash() {
-    notePresenter.getAllNotes(context, true).then((list) {
+    _notePresenter.getAllNotes(context, true).then((list) {
       setState(() {
-        this.notes = list;
+        this._notes = list;
       });
     });
   }
@@ -43,7 +43,7 @@ class _TrashNotePageState extends State<TrashNotePage> {
                 style: TextStyle(fontSize: 20),
               )),
               onPressed: () {
-                _restore(note);
+                restore(note);
                 Navigator.of(context).pop();
                 _getAllTrash();
               },
@@ -56,7 +56,7 @@ class _TrashNotePageState extends State<TrashNotePage> {
                 style: TextStyle(fontSize: 20),
               )),
               onPressed: () {
-                _delete(note);
+                delete(note);
                 Navigator.of(context).pop();
                 _getAllTrash();
               },
@@ -75,22 +75,22 @@ class _TrashNotePageState extends State<TrashNotePage> {
       ),
       body: Stack(
         children: <Widget>[
-          _getBackground(),
+          getBackground(),
           ScrollConfiguration(
             behavior: ListBehavior(),
             child: ListView.builder(
-                itemCount: notes == null ? 0 : this.notes.length,
+                itemCount: _notes == null ? 0 : this._notes.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(children: [
                     GestureDetector(
                       onLongPress: () {
-                        _showAction(this.notes[index]);
+                        _showAction(this._notes[index]);
                       },
                       child: ListTile(
                         title: Text(
-                          (this.notes[index].title == "\n"
+                          (this._notes[index].title == "\n"
                               ? S.of(context).undefined
-                              : this.notes[index].title),
+                              : this._notes[index].title),
                           style: TextStyle(
                             fontSize: 22,
                           ),
@@ -98,7 +98,7 @@ class _TrashNotePageState extends State<TrashNotePage> {
                           maxLines: 1,
                         ),
                         subtitle: Text(
-                          Utils.getSubTitle(this.notes[index]),
+                          Utils.getSubTitle(this._notes[index]),
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 16,
@@ -119,16 +119,16 @@ class _TrashNotePageState extends State<TrashNotePage> {
     );
   }
 
-  _restore(Note note) {
-    notePresenter.undoDeleteNote(note);
+  restore(Note note) {
+    _notePresenter.undoDeleteNote(note);
   }
 
-  _delete(Note note) {
-    notePresenter.realDeleteNote(note);
+  delete(Note note) {
+    _notePresenter.realDeleteNote(note);
   }
 
-  _getBackground() {
-    if (this.notes == null || this.notes.length == 0) {
+  getBackground() {
+    if (this._notes == null || this._notes.length == 0) {
       return Center(
         child: SizedBox(
           width: 100,

@@ -14,7 +14,6 @@ class ForgetPasswdPage extends StatefulWidget {
 class _ForgetPasswdPageState extends State<ForgetPasswdPage> {
   final _formKey = GlobalKey<FormState>();
   String _email;
-  Color _eyeColor;
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +115,5 @@ class _ForgetPasswdPageState extends State<ForgetPasswdPage> {
   }
 
   void getPasswd() {
-    print(_email);
   }
 }

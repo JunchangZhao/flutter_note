@@ -69,7 +69,6 @@ class NoteDao {
 
   Future<int> delete(Note note) async {
     note.isDeleted = true;
-    print(note.user);
     return await db.update(tableName, note.toMap(),
         where: '$columnCreateTime = ?', whereArgs: [note.createTime]);
   }

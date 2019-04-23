@@ -12,19 +12,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_app/utils/sputils.dart';
 
-
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  String accountName = "";
-  List<Note> notes;
-
-  Note removeNote;
-
-  NotePresenter notePresenter = NotePresenter();
+  String _accountName = "";
+  List<Note> _notes;
+  Note _removedNote;
+  NotePresenter _notePresenter = NotePresenter();
 
   @override
   void initState() {
@@ -32,48 +29,65 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     getAllNotes();
     SPKeys.ACCOUNT_NAME.getString().then((value) {
       setState(() {
-        this.accountName = value;
+        this._accountName = value;
       });
     });
-    this.notes = homePageNoteList;
+    this._notes = homePageNoteList;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(S
+            .of(context)
+            .app_name),
+      ),
+      body: Center(child: getHomeBody()),
+      drawer: Drawer(
+        child: HomeDrawer(() {
+          getAllNotes();
+        }, _accountName),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: addNote,
+        child: Icon(Icons.add),
+      ),
+    );
   }
 
   getAllNotes() {
-    notePresenter.getAllNotes(context, false).then((list) {
+    _notePresenter.getAllNotes(context, false).then((list) {
       setState(() {
-        this.notes = list;
+        this._notes = list;
       });
     });
   }
 
-  Future<void> _getAllNotes() async {
-    getAllNotes();
-    return null;
-  }
 
-  void _addNote() {
+  void addNote() {
     Navigator.of(context).push(SlideRoute(EditNotePage(null))).then((result) {
       getAllNotes();
     });
   }
 
-  void _edit(Note note) {
-    this.notes = null;
+  void edit(Note note) {
+    this._notes = null;
     Navigator.of(context).push(SlideRoute(EditNotePage(note))).then((result) {
       getAllNotes();
     });
   }
 
-  void _removeNote(int index) {
-    removeNote = this.notes[index];
-    this.notes.removeAt(index);
-    notePresenter.deleteNote(removeNote).then((result) {
+  void removeNote(int index) {
+    _removedNote = this._notes[index];
+    this._notes.removeAt(index);
+    _notePresenter.deleteNote(_removedNote).then((result) {
       getAllNotes();
     });
   }
 
-  _undoDelete() {
-    notePresenter.undoDeleteNote(removeNote).then((result) {
+  undoDelete() {
+    _notePresenter.undoDeleteNote(_removedNote).then((result) {
       getAllNotes();
     });
   }
@@ -83,75 +97,70 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     showToast(state.toString());
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).app_name),
-      ),
-      body: Center(child: _getHomeBody()),
-      drawer: Drawer(
-        child: HomeDrawer(() {
-          getAllNotes();
-        }, accountName),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addNote,
-        child: Icon(Icons.add),
+  ListView buildNotesListView() {
+    return ListView.builder(
+        itemCount: (_notes == null ? 0 : _notes.length),
+        itemBuilder: (BuildContext context, int index) {
+          return buildItem(index, context);
+        });
+  }
+
+  Dismissible buildItem(int index, BuildContext context) {
+    return Dismissible(
+      key: new Key("${this._notes[index].createTime}"),
+      onDismissed: (direction) {
+        doOnItemDismiss(index, context);
+      },
+      child: GestureDetector(
+          onTap: () {
+            edit(this._notes[index]);
+          },
+          child: NoteListItem(_notes.elementAt(index))),
+      background: Container(
+        color: Colors.grey,
       ),
     );
   }
 
-  ListView buildNotesListView() {
-    return ListView.builder(
-        itemCount: (notes == null ? 0 : notes.length),
-        itemBuilder: (BuildContext context, int index) {
-          return Dismissible(
-            key: new Key("${this.notes[index].createTime}"),
-            onDismissed: (direction) {
-              _removeNote(index);
-              Scaffold.of(context).showSnackBar(new SnackBar(
-                content: Row(
-                  children: <Widget>[
-                    Expanded(child: Text(S.of(context).note_removed)),
-                    GestureDetector(
-                      onTap: _undoDelete,
-                      child: Text(
-                        S.of(context).undo,
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 18,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                duration: Duration(seconds: 1),
-              ));
-            },
-            child: GestureDetector(
-                onTap: () {
-                  _edit(this.notes[index]);
-                },
-                child: NoteListItem(notes.elementAt(index))),
-            background: Container(
-              color: Colors.grey,
+  void doOnItemDismiss(int index, BuildContext context) {
+    removeNote(index);
+    Scaffold.of(context).showSnackBar(new SnackBar(
+      content: Row(
+        children: <Widget>[
+          Expanded(child: Text(S
+              .of(context)
+              .note_removed)),
+          GestureDetector(
+            onTap: undoDelete,
+            child: Text(
+              S
+                  .of(context)
+                  .undo,
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 18,
+                decoration: TextDecoration.underline,
+              ),
             ),
-          );
-        });
+          )
+        ],
+      ),
+      duration: Duration(seconds: 1),
+    ));
   }
 
-  _getHomeBody() {
+  getHomeBody() {
     return Stack(children: <Widget>[
-      _getBackground(),
+      getBackground(),
       Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Expanded(
               child: RefreshIndicator(
-                onRefresh: _getAllNotes,
+                onRefresh: () {
+                  getAllNotes();
+                },
                 child: ScrollConfiguration(
                   child: buildNotesListView(),
                   behavior: ListBehavior(),
@@ -164,8 +173,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     ]);
   }
 
-  _getBackground() {
-    if (this.notes == null || this.notes.length == 0) {
+  getBackground() {
+    if (this._notes == null || this._notes.length == 0) {
       return Center(
         child: SizedBox(
           width: 100,

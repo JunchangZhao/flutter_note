@@ -9,9 +9,9 @@ import 'package:oktoast/oktoast.dart';
 import 'dart:convert';
 
 class EditNotePage extends StatefulWidget {
-  Note note;
+  Note _note;
 
-  EditNotePage(this.note);
+  EditNotePage(this._note);
 
   @override
   _EditNotePage createState() => _EditNotePage();
@@ -30,17 +30,17 @@ class _EditNotePage extends State<EditNotePage>
   @override
   void initState() {
     super.initState();
-    if (widget.note == null) {
+    if (widget._note == null) {
       this.document = NotusDocument();
       document.format(0, 10, NotusAttribute.heading.level1);
     } else {
-      this.document = NotusDocument.fromJson(json.decode(widget.note.context));
+      this.document = NotusDocument.fromJson(json.decode(widget._note.context));
       this.isEdit = true;
     }
 
     _controller = new ZefyrController(document);
     _controller.addListener(() {
-      _saveNote();
+      saveNote();
     });
     _focusNode = new FocusNode();
     tabController = TabController(length: 2, vsync: this);
@@ -55,12 +55,12 @@ class _EditNotePage extends State<EditNotePage>
     });
   }
 
-  Future _saveNote() async {
+  Future saveNote() async {
     if (this.isEdit) {
       Note note = Note(
           this.document.toDelta()[0].data,
           json.encode(this.document),
-          widget.note.createTime,
+          widget._note.createTime,
           DateTime.now().millisecondsSinceEpoch,
           await SPKeys.ACCOUNT_NAME.getString());
       if (this.document.length == 1 &&
@@ -78,7 +78,7 @@ class _EditNotePage extends State<EditNotePage>
       notePresenter.addNote(
               this.document.toDelta()[0].data, json.encode(this.document))
           .then((note) {
-        widget.note = note;
+        widget._note = note;
       });
     }
   }
@@ -89,16 +89,16 @@ class _EditNotePage extends State<EditNotePage>
       body: ScrollConfiguration(
         behavior: ListBehavior(),
         child: NestedScrollView(
-          headerSliverBuilder: _sliverBuilder,
+          headerSliverBuilder: sliverBuilder,
           body: Column(
             children: <Widget>[
-              _getTabBar(),
+              getTabBar(),
               Expanded(
                 child: TabBarView(
                   controller: tabController,
                   children: <Widget>[
-                    _getTabView(true),
-                    _getTabView(false),
+                    getTabView(true),
+                    getTabView(false),
                   ],
                 ),
               )
@@ -106,11 +106,11 @@ class _EditNotePage extends State<EditNotePage>
           ),
         ),
       ),
-      floatingActionButton: _getFloatingButtun(),
+      floatingActionButton: getFloatingButtun(),
     );
   }
 
-  Widget _getTabView(bool enable) {
+  Widget getTabView(bool enable) {
     return Container(
         child: ZefyrScaffold(
             child: ZefyrEditor(
@@ -127,7 +127,7 @@ class _EditNotePage extends State<EditNotePage>
     super.dispose();
   }
 
-  List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
+  List<Widget> sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
     return <Widget>[
       SliverAppBar(
         centerTitle: true,
@@ -142,7 +142,7 @@ class _EditNotePage extends State<EditNotePage>
     ];
   }
 
-  Widget _getTabBar() {
+  Widget getTabBar() {
     return Container(
       height: 72,
       child: PhysicalModel(
@@ -178,7 +178,7 @@ class _EditNotePage extends State<EditNotePage>
     );
   }
 
-  Widget _getFloatingButtun() {
+  Widget getFloatingButtun() {
     if (!this.showFloatButton) {
       return null;
     }
@@ -187,7 +187,7 @@ class _EditNotePage extends State<EditNotePage>
       child: FloatingActionButton(
         child: Icon(Icons.save),
         onPressed: () {
-          _saveNote();
+          saveNote();
           showToast(
             S.of(context).save_success,
             position: ToastPosition.bottom,

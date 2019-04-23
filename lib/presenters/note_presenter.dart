@@ -53,7 +53,6 @@ class NotePresenter {
     note.user = await SPKeys.ACCOUNT_NAME.getString();
     NoteDao sqlite = await NoteDao.getInstance();
     var result = await sqlite.update(note);
-    print(result);
     return result;
   }
 

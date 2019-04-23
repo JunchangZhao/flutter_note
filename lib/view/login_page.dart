@@ -224,7 +224,6 @@ class _LoginPageState extends State<LoginPage> {
   Future _login() async {
     LoginResult result = await accountPresenter.login(_email, _password);
     if (result != null && result.isSuccess) {
-      print(result.data.isSuccess);
       if (result.data.isSuccess) {
         SPKeys.ACCOUNT_NAME.set(_email);
         SPKeys.JWT.set(result.data.jwt);

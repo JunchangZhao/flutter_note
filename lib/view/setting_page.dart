@@ -20,8 +20,8 @@ class _SettingPageState extends State<SettingPage> {
   bool _compress = false;
   bool _autoUpload = false;
 
-  AccountPresenter accountPresenter;
-  SettingPresenter settingPresenter;
+  AccountPresenter _accountPresenter;
+  SettingPresenter _settingPresenter;
 
   List _sortList;
   List _fontList;
@@ -29,8 +29,8 @@ class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     super.initState();
-    accountPresenter = AccountPresenter(context);
-    settingPresenter = SettingPresenter(context);
+    _accountPresenter = AccountPresenter(context);
+    _settingPresenter = SettingPresenter(context);
 
     SPKeys.SETTING_SORT.getInt().then((value) {
       this._sortList = [
@@ -208,7 +208,7 @@ class _SettingPageState extends State<SettingPage> {
                 child: Text(S.of(context).confirm),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  accountPresenter.logout().then((value) {
+                  _accountPresenter.logout().then((value) {
                     Navigator.pop(context);
                     Navigator.of(context).pushReplacementNamed('/LoginPage');
                   });
