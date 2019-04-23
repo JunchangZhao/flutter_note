@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/model/net/login_result.dart';
-import 'package:flutter_app/presenters/account_presenter.dart';
+import 'package:flutter_app/model/account_model.dart';
+import 'package:flutter_app/model/data/net/login_result.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/forget_passwd_page.dart';
 import 'package:flutter_app/view/register_page.dart';
@@ -22,11 +22,11 @@ class _LoginPageState extends State<LoginPage> {
   String _email, _password;
   bool _isObscure = true;
   Color _eyeColor;
-  AccountPresenter accountPresenter;
+  AccountModel accountPresenter;
 
   @override
   void initState() {
-    accountPresenter = AccountPresenter(context);
+    accountPresenter = AccountModel(context);
     super.initState();
   }
 

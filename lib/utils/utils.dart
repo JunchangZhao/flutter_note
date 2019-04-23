@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_app/model/db/note.dart';
+import 'package:flutter_app/model/data/db/note.dart';
 import 'package:flutter_app/utils/date_format_base.dart';
 import 'package:notus/notus.dart';
 

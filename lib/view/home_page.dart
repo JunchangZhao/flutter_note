@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/common_datas.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/presenters/note_presenter.dart';
+import 'package:flutter_app/model/data/db/note.dart';
+import 'package:flutter_app/model/note_model.dart';
 import 'package:flutter_app/router/custome_router.dart';
-import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/view/edit_note_page.dart';
 import 'package:flutter_app/widget/home_drawer.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
@@ -21,7 +21,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   String _accountName = "";
   List<Note> _notes;
   Note _removedNote;
-  NotePresenter _notePresenter = NotePresenter();
+  NoteModel _notePresenter = NoteModel();
 
   @override
   void initState() {

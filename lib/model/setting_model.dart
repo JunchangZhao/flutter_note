@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class SettingPresenter {
+class SettingModel {
   BuildContext context;
 
-  SettingPresenter(context) {
+  SettingModel(context) {
     this.context = context;
   }
 

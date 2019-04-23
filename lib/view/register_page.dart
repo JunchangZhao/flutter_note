@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/model/net/register_result.dart';
-import 'package:flutter_app/presenters/account_presenter.dart';
-import 'package:flutter_app/utils/sputils.dart';
-import 'package:flutter_app/view/home_page.dart';
+import 'package:flutter_app/model/account_model.dart';
+import 'package:flutter_app/model/data/net/register_result.dart';
 import 'package:flutter_app/widget/loading_dialog.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,11 +17,11 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   String _email, _password, _confirmPasswd;
-  AccountPresenter _accountPresenter;
+  AccountModel _accountPresenter;
 
   @override
   void initState() {
-    _accountPresenter = AccountPresenter(context);
+    _accountPresenter = AccountModel(context);
     super.initState();
   }
 

@@ -1,15 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/model/net/login_result.dart';
-import 'package:flutter_app/model/net/register_result.dart';
+import 'package:flutter_app/model/data/net/login_result.dart';
+import 'package:flutter_app/model/data/net/register_result.dart';
 import 'package:flutter_app/utils/netutils.dart';
 import 'package:flutter_app/utils/sputils.dart';
 
-class AccountPresenter {
+class AccountModel {
   var context;
 
-  AccountPresenter(this.context);
+  AccountModel(this.context);
 
   Future<LoginResult> login(String email, String pwd) async {
     Response response = await NetUtils.getInstance()

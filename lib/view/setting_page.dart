@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/event.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/presenters/account_presenter.dart';
-import 'package:flutter_app/presenters/setting_presenter.dart';
+import 'package:flutter_app/model/account_model.dart';
+import 'package:flutter_app/model/setting_model.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/dialog_choose.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
@@ -20,8 +20,8 @@ class _SettingPageState extends State<SettingPage> {
   bool _compress = false;
   bool _autoUpload = false;
 
-  AccountPresenter _accountPresenter;
-  SettingPresenter _settingPresenter;
+  AccountModel _accountPresenter;
+  SettingModel _settingPresenter;
 
   List _sortList;
   List _fontList;
@@ -29,8 +29,8 @@ class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     super.initState();
-    _accountPresenter = AccountPresenter(context);
-    _settingPresenter = SettingPresenter(context);
+    _accountPresenter = AccountModel(context);
+    _settingPresenter = SettingModel(context);
 
     SPKeys.SETTING_SORT.getInt().then((value) {
       this._sortList = [

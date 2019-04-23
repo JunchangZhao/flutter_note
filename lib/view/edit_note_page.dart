@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/model/db/note.dart';
-import 'package:flutter_app/presenters/note_presenter.dart';
+import 'package:flutter_app/model/data/db/note.dart';
+import 'package:flutter_app/model/note_model.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:zefyr/zefyr.dart';
@@ -25,7 +25,7 @@ class _EditNotePage extends State<EditNotePage>
   bool isEdit = false;
   TabController tabController;
   bool showFloatButton = true;
-  NotePresenter notePresenter = NotePresenter();
+  NoteModel notePresenter = NoteModel();
 
   @override
   void initState() {

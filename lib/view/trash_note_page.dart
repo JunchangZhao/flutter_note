@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/model/db/note.dart';
-import 'package:flutter_app/presenters/note_presenter.dart';
+import 'package:flutter_app/model/data/db/note.dart';
+import 'package:flutter_app/model/note_model.dart';
 import 'package:flutter_app/utils/utils.dart';
 import 'package:flutter_app/widget/custom_simple_dialog.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
@@ -14,7 +14,7 @@ class TrashNotePage extends StatefulWidget {
 
 class _TrashNotePageState extends State<TrashNotePage> {
   List<Note> _notes;
-  NotePresenter _notePresenter = NotePresenter();
+  NoteModel _notePresenter = NoteModel();
 
   @override
   void initState() {

@@ -1,7 +1,7 @@
+import 'package:flutter_app/model/data/db/note.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:flutter_app/model/db/note.dart';
 
 class NoteDao {
   static NoteDao instance;

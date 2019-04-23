@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/model/db/note.dart';
 import 'package:flutter_app/dao/note_dao.dart';
+import 'package:flutter_app/model/data/db/note.dart';
 import 'package:flutter_app/utils/sputils.dart';
 
-class NotePresenter {
+class NoteModel {
 
 
   Future<List<Note>> getAllNotes(BuildContext context, bool trash) async {
