@@ -64,7 +64,6 @@ class HomeViewModelImpl implements HomeViewModel {
     _removedNote = this._noteList[index];
     this._noteList.removeAt(index);
     await _noteModel.deleteNote(_removedNote);
-    await refreshNotes();
   }
 
   @override
