@@ -30,9 +30,6 @@ class HomeViewModelImpl implements HomeViewModel {
   }
 
   @override
-  Sink get inNoteList => _homeController;
-
-  @override
   Stream<List<Note>> get outNotelist => _homeController.stream.map((notes) {
         _noteList.addAll(notes);
         return _noteList;

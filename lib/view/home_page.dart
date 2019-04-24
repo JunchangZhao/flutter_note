@@ -159,4 +159,10 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     }
     return Container();
   }
+
+  @override
+  void dispose() {
+    _homeViewModel.dispose();
+    super.dispose();
+  }
 }
