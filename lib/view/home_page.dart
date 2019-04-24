@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/common_datas.dart';
+import 'package:flutter_app/di/provider.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/data/db/note.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/viewmodel/home_vm.dart';
-import 'package:flutter_app/viewmodel/impl/home_vm_impl.dart';
 import 'package:flutter_app/widget/home_drawer.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_app/widget/note_list_item.dart';
@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    _homeViewModel = HomeViewModelImpl(context);
+    _homeViewModel = provideHomeViewModel(context);
     _homeViewModel.refreshNotes();
     SPKeys.ACCOUNT_NAME.getString().then((value) {
       setState(() {
