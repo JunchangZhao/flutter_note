@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/common/common_datas.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/data/db/note.dart';
-import 'package:flutter_app/model/note_model.dart';
-import 'package:flutter_app/router/custome_router.dart';
-import 'package:flutter_app/view/edit_note_page.dart';
+import 'package:flutter_app/utils/sputils.dart';
+import 'package:flutter_app/viewmodel/home_vm.dart';
+import 'package:flutter_app/viewmodel/impl/home_vm_impl.dart';
 import 'package:flutter_app/widget/home_drawer.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_app/widget/note_list_item.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:flutter_app/utils/sputils.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -20,18 +18,20 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   String _accountName = "";
   List<Note> _notes;
-  Note _removedNote;
-  NoteModel _notePresenter = NoteModel();
+
+  HomeViewModel _homeViewModel;
 
   @override
   void initState() {
     super.initState();
-    getAllNotes();
+    _homeViewModel = HomeViewModelImpl(context);
+    _homeViewModel.getAllNotes();
     SPKeys.ACCOUNT_NAME.getString().then((value) {
       setState(() {
         this._accountName = value;
       });
     });
+    print(homePageNoteList);
     this._notes = homePageNoteList;
   }
 
@@ -39,62 +39,19 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S
-            .of(context)
-            .app_name),
+        title: Text(S.of(context).app_name),
       ),
       body: Center(child: getHomeBody()),
       drawer: Drawer(
         child: HomeDrawer(() {
-          getAllNotes();
+          _homeViewModel.getAllNotes();
         }, _accountName),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: addNote,
+        onPressed: _homeViewModel.addNote,
         child: Icon(Icons.add),
       ),
     );
-  }
-
-  getAllNotes() {
-    _notePresenter.getAllNotes(context, false).then((list) {
-      setState(() {
-        this._notes = list;
-      });
-    });
-  }
-
-
-  void addNote() {
-    Navigator.of(context).push(SlideRoute(EditNotePage(null))).then((result) {
-      getAllNotes();
-    });
-  }
-
-  void edit(Note note) {
-    this._notes = null;
-    Navigator.of(context).push(SlideRoute(EditNotePage(note))).then((result) {
-      getAllNotes();
-    });
-  }
-
-  void removeNote(int index) {
-    _removedNote = this._notes[index];
-    this._notes.removeAt(index);
-    _notePresenter.deleteNote(_removedNote).then((result) {
-      getAllNotes();
-    });
-  }
-
-  undoDelete() {
-    _notePresenter.undoDeleteNote(_removedNote).then((result) {
-      getAllNotes();
-    });
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    showToast(state.toString());
   }
 
   ListView buildNotesListView() {
@@ -111,11 +68,17 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       onDismissed: (direction) {
         doOnItemDismiss(index, context);
       },
-      child: GestureDetector(
-          onTap: () {
-            edit(this._notes[index]);
-          },
-          child: NoteListItem(_notes.elementAt(index))),
+      child: StreamBuilder<List<Note>>(
+          stream: _homeViewModel.outNotelist,
+          builder: (context, snapshot) {
+            print("jack: ${snapshot.data}");
+            this._notes = snapshot.data;
+            return GestureDetector(
+                onTap: () {
+                  _homeViewModel.edit(this._notes[index]);
+                },
+                child: NoteListItem(_notes.elementAt(index)));
+          }),
       background: Container(
         color: Colors.grey,
       ),
@@ -123,19 +86,15 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   void doOnItemDismiss(int index, BuildContext context) {
-    removeNote(index);
+    _homeViewModel.removeNote(index);
     Scaffold.of(context).showSnackBar(new SnackBar(
       content: Row(
         children: <Widget>[
-          Expanded(child: Text(S
-              .of(context)
-              .note_removed)),
+          Expanded(child: Text(S.of(context).note_removed)),
           GestureDetector(
-            onTap: undoDelete,
+            onTap: _homeViewModel.undoDelete,
             child: Text(
-              S
-                  .of(context)
-                  .undo,
+              S.of(context).undo,
               style: TextStyle(
                 color: Colors.green,
                 fontSize: 18,
@@ -159,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () {
-                  getAllNotes();
+                  _homeViewModel.getAllNotes();
                 },
                 child: ScrollConfiguration(
                   child: buildNotesListView(),
