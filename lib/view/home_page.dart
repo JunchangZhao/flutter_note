@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     _homeViewModel = HomeViewModelImpl(context);
-    _homeViewModel.getAllNotes();
+    _homeViewModel.refreshNotes();
     SPKeys.ACCOUNT_NAME.getString().then((value) {
       setState(() {
         this._accountName = value;
@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     });
     this._notes = homePageNoteList;
     eventBus.on<SortChangeEvent>().listen((event) {
-      _homeViewModel.getAllNotes();
+      _homeViewModel.refreshNotes();
     });
   }
 
@@ -47,9 +47,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       ),
       body: Center(child: getHomeBody()),
       drawer: Drawer(
-        child: HomeDrawer(() {
-          _homeViewModel.getAllNotes();
-        }, _accountName),
+        child: HomeDrawer(_accountName, () {
+          _homeViewModel.gotoSetting();
+        }, () {
+          _homeViewModel.gotoTrash().then((value) {
+            _homeViewModel.refreshNotes();
+          });
+        }),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _homeViewModel.addNote,
@@ -72,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   Expanded(
                     child: RefreshIndicator(
                       onRefresh: () {
-                        return _homeViewModel.getAllNotes();
+                        return _homeViewModel.refreshNotes();
                       },
                       child: ScrollConfiguration(
                         child: buildNotesListView(),

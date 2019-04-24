@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_app/model/data/db/note.dart';
 import 'package:flutter_app/model/note_model.dart';
 import 'package:flutter_app/router/custome_router.dart';
 import 'package:flutter_app/view/edit_note_page.dart';
+import 'package:flutter_app/view/setting_page.dart';
+import 'package:flutter_app/view/trash_note_page.dart';
 import 'package:flutter_app/viewmodel/home_vm.dart';
 
 class HomeViewModelImpl implements HomeViewModel {
@@ -38,7 +41,7 @@ class HomeViewModelImpl implements HomeViewModel {
   @override
   addNote() async {
     await Navigator.of(context).push(SlideRoute(EditNotePage(null)));
-    await getAllNotes();
+    await refreshNotes();
   }
 
   @override
@@ -46,11 +49,11 @@ class HomeViewModelImpl implements HomeViewModel {
     _noteList.clear();
     _homeController.add(null);
     await Navigator.of(context).push(SlideRoute(EditNotePage(note)));
-    await getAllNotes();
+    await refreshNotes();
   }
 
   @override
-  getAllNotes() async {
+  refreshNotes() async {
     _noteList.clear();
     List<Note> notes = await _noteModel.getAllNotes(context, false);
     _homeController.add(notes);
@@ -61,12 +64,24 @@ class HomeViewModelImpl implements HomeViewModel {
     _removedNote = this._noteList[index];
     this._noteList.removeAt(index);
     await _noteModel.deleteNote(_removedNote);
-    await getAllNotes();
+    await refreshNotes();
   }
 
   @override
   undoDelete() async {
     await _noteModel.undoDeleteNote(_removedNote);
-    await getAllNotes();
+    await refreshNotes();
+  }
+
+  @override
+  Future gotoSetting() async {
+    return await Navigator.push(
+        context, new MaterialPageRoute(builder: (context) => SettingPage()));
+  }
+
+  @override
+  Future gotoTrash() async {
+    return await Navigator.push(
+        context, new MaterialPageRoute(builder: (context) => TrashNotePage()));
   }
 }

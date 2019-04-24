@@ -9,11 +9,15 @@ abstract class HomeViewModel {
 
   edit(Note note);
 
-  getAllNotes();
+  refreshNotes();
 
   void removeNote(int index);
 
   undoDelete();
 
-  void dispose();
+  dispose();
+
+  Future gotoSetting();
+
+  Future gotoTrash() {}
 }

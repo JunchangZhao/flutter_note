@@ -4,7 +4,7 @@ import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/account_model.dart';
 import 'package:flutter_app/model/setting_model.dart';
 import 'package:flutter_app/utils/sputils.dart';
-import 'package:flutter_app/view/dialog_choose.dart';
+import 'package:flutter_app/widget/dialog_choose.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:package_info/package_info.dart';
 
