@@ -32,7 +32,7 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  buildBody() {
+  Widget buildBody() {
     return StreamBuilder<SettingData>(
       stream: _settingModelView.outSettingData,
       builder: (context, snapShot) {
@@ -57,7 +57,7 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ),
             Divider(),
-            buildLogoutItem(S.of(context).logout, logout)
+            buildLogoutItem(S.of(context).logout, showLogoutDialog)
           ],
         );
       },
@@ -72,7 +72,7 @@ class _SettingPageState extends State<SettingPage> {
     });
   }
 
-  buildFontItem(List fontList, int fontIndex) {
+  Widget buildFontItem(List fontList, int fontIndex) {
     return buildItem(S.of(context).font_size, fontList[fontIndex], () {
       DialogChoose.showSortChooseDialg(context, fontList, (index) {
         _settingModelView.chooseFontMode(index);
@@ -80,21 +80,21 @@ class _SettingPageState extends State<SettingPage> {
     });
   }
 
-  buildCompressItem(bool isCompress) {
+  Widget buildCompressItem(bool isCompress) {
     return buildSwitchItem(S.of(context).compress_note_item, isCompress,
         (flag) {
       _settingModelView.chooseCompressMode(flag);
     });
   }
 
-  buildUploadNoteItem(isAutoUpload) {
+  Widget buildUploadNoteItem(isAutoUpload) {
     return buildSwitchItem(S.of(context).auto_upload_notes, isAutoUpload,
         (flag) async {
       _settingModelView.chooseUploadMode(flag);
     });
   }
 
-  buildSwitchItem(String title, bool flag, Function onItemChanged) {
+  Widget buildSwitchItem(String title, bool flag, Function onItemChanged) {
     return Column(
       children: <Widget>[
         Padding(
@@ -121,7 +121,7 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  buildVersionItem(String version) {
+  Widget buildVersionItem(String version) {
     return buildItem(S.of(context).version, version, () {});
   }
 
@@ -139,7 +139,7 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  logout() {
+  showLogoutDialog() {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -157,11 +157,7 @@ class _SettingPageState extends State<SettingPage> {
                 child: Text(S.of(context).confirm),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  //TODO
-//                  _accountPresenter.logout().then((value) {
-//                    Navigator.pop(context);
-//                    Navigator.of(context).pushReplacementNamed('/LoginPage');
-//                  });
+                  _settingModelView.logout();
                 },
               ),
             ],

@@ -12,4 +12,6 @@ abstract class SettingViewModel {
   void chooseCompressMode(bool isCompress);
 
   void chooseUploadMode(isAutoUpload);
+
+  void logout();
 }

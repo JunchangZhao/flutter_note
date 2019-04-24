@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/common/event.dart';
+import 'package:flutter_app/di/provider.dart';
 import 'package:flutter_app/generated/i18n.dart';
+import 'package:flutter_app/model/account_model.dart';
 import 'package:flutter_app/model/data/setting_data.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/viewmodel/setting_vm.dart';
@@ -11,6 +13,7 @@ import 'package:package_info/package_info.dart';
 class SettingViewModelImpl implements SettingViewModel {
   BuildContext context;
   SettingData _settingData = SettingData();
+  AccountModel _accountModel;
 
   SettingViewModelImpl(this.context);
 
@@ -18,22 +21,8 @@ class SettingViewModelImpl implements SettingViewModel {
 
   @override
   initSettingDatas() async {
-    _settingData.isAutoUpload = await SPKeys.AUTO_UPLOAD.getBoolean();
-    _settingData.sortInde = await SPKeys.SETTING_SORT.getInt();
-    _settingData.fontIndex = await SPKeys.SETTING_FONT_SIZE.getInt();
-    var platform = await PackageInfo.fromPlatform();
-    _settingData.versionCode = platform.version;
-    _settingData.isCompress = await SPKeys.COMPRESS_ITEM.getBoolean();
-    _settingData.sortList = [
-      S.of(this.context).modify_time,
-      S.of(this.context).create_time,
-      S.of(this.context).title
-    ];
-    _settingData.fontList = [
-      S.of(this.context).small,
-      S.of(this.context).normal,
-      S.of(this.context).large
-    ];
+    _accountModel = provideAccountModel(context);
+    _settingData = await _accountModel.getSettingData();
     _settingController.add(_settingData);
   }
 
@@ -77,5 +66,12 @@ class SettingViewModelImpl implements SettingViewModel {
     await SPKeys.AUTO_UPLOAD.set(flag);
     _settingData.isAutoUpload = flag;
     _settingController.add(_settingData);
+  }
+
+  @override
+  Future logout() async {
+    await _accountModel.logout();
+    Navigator.pop(context);
+    Navigator.of(context).pushReplacementNamed('/LoginPage');
   }
 }
