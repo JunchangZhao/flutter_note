@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/common/common_datas.dart';
 import 'package:flutter_app/common/event.dart';
 import 'package:flutter_app/di/provider.dart';
 import 'package:flutter_app/generated/i18n.dart';
@@ -43,6 +44,7 @@ class SettingViewModelImpl implements SettingViewModel {
     _settingData.sortInde = index;
     eventBus.fire(SortChangeEvent());
     _settingController.add(_settingData);
+    globalSettingData = _settingData;
   }
 
   @override
@@ -51,6 +53,7 @@ class SettingViewModelImpl implements SettingViewModel {
     _settingData.fontIndex = index;
     eventBus.fire(FontChangeEvent(index));
     _settingController.add(_settingData);
+    globalSettingData = _settingData;
   }
 
   @override
@@ -59,6 +62,7 @@ class SettingViewModelImpl implements SettingViewModel {
     eventBus.fire(CompressEvent(isCompress));
     _settingData.isCompress = isCompress;
     _settingController.add(_settingData);
+    globalSettingData = _settingData;
   }
 
   @override
@@ -66,6 +70,7 @@ class SettingViewModelImpl implements SettingViewModel {
     await SPKeys.AUTO_UPLOAD.set(flag);
     _settingData.isAutoUpload = flag;
     _settingController.add(_settingData);
+    globalSettingData = _settingData;
   }
 
   @override

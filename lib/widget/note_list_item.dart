@@ -25,18 +25,26 @@ class _NoteListItemState extends State<NoteListItem> {
   @override
   void initState() {
     SPKeys.SETTING_FONT_SIZE.getInt().then((value) {
-      this._font = value;
+      setState(() {
+        this._font = value;
+      });
     });
     SPKeys.COMPRESS_ITEM.getBoolean().then((value) {
-      this._isCompress = value;
+      setState(() {
+        this._isCompress = value;
+      });
     });
     super.initState();
     eventBus.on<FontChangeEvent>().listen((event) {
-      this._font = event.fontType;
+      setState(() {
+        this._font = event.fontType;
+      });
     });
 
     eventBus.on<CompressEvent>().listen((event) {
-      this._isCompress = event.flag;
+      setState(() {
+        this._isCompress = event.flag;
+      });
     });
   }
 

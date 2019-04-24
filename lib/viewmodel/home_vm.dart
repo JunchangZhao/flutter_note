@@ -1,9 +1,8 @@
 import 'package:flutter_app/model/data/db/note.dart';
+import 'package:flutter_app/model/data/home_data.dart';
+import 'package:flutter_app/viewmodel/base_vm.dart';
 
-abstract class HomeViewModel {
-
-  Stream<List<Note>> get outNotelist;
-
+abstract class HomeViewModel implements BaseViewModel<HomeData> {
   addNote();
 
   edit(Note note);
@@ -13,8 +12,6 @@ abstract class HomeViewModel {
   void removeNote(int index);
 
   undoDelete();
-
-  dispose();
 
   Future gotoSetting();
 
