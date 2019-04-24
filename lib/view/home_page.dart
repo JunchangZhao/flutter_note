@@ -66,7 +66,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     return StreamBuilder<List<Note>>(
         stream: _homeViewModel.outNotelist,
         builder: (context, snapshot) {
-          this._notes = snapshot.data;
+          if (snapshot.data != null) {
+            this._notes = snapshot.data;
+          }
           return Stack(children: <Widget>[
             getBackground(),
             Container(
