@@ -8,6 +8,7 @@ import 'package:flutter_app/viewmodel/impl/home_vm_impl.dart';
 import 'package:flutter_app/widget/home_drawer.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_app/widget/note_list_item.dart';
+import 'package:flutter_app/common/event.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -33,6 +34,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       });
     });
     this._notes = homePageNoteList;
+    eventBus.on<SortChangeEvent>().listen((event) {
+      _homeViewModel.getAllNotes();
+    });
   }
 
   @override

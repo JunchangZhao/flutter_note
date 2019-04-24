@@ -4,8 +4,6 @@ import 'package:flutter_app/model/data/db/note.dart';
 import 'package:flutter_app/utils/sputils.dart';
 
 class NoteModel {
-
-
   Future<List<Note>> getAllNotes(BuildContext context, bool trash) async {
     NoteDao sqlite = await NoteDao.getInstance();
     List<Note> result = await sqlite.queryAll(trash);
@@ -13,10 +11,10 @@ class NoteModel {
     if (result != null) {
       result.sort((left, right) {
         if (sortType == 0) {
-          return left.modifyTime.compareTo(right.modifyTime);
+          return -left.modifyTime.compareTo(right.modifyTime);
         }
         if (sortType == 1) {
-          return left.createTime.compareTo(right.createTime);
+          return -left.createTime.compareTo(right.createTime);
         }
         if (sortType == 2) {
           return left.title.compareTo(right.title);
@@ -49,7 +47,7 @@ class NoteModel {
     return result;
   }
 
-   Future<int> updateNote(Note note) async {
+  Future<int> updateNote(Note note) async {
     note.user = await SPKeys.ACCOUNT_NAME.getString();
     NoteDao sqlite = await NoteDao.getInstance();
     var result = await sqlite.update(note);
