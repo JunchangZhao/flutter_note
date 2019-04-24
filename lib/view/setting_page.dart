@@ -3,7 +3,6 @@ import 'package:flutter_app/common/event.dart';
 import 'package:flutter_app/di/provider.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/data/setting_data.dart';
-import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/viewmodel/setting_vm.dart';
 import 'package:flutter_app/widget/dialog_choose.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
@@ -68,12 +67,7 @@ class _SettingPageState extends State<SettingPage> {
   Widget buildSortItem(List sortList, int sortIndex) {
     return buildItem(S.of(context).sort, sortList[sortIndex], () {
       DialogChoose.showSortChooseDialg(context, sortList, (index) {
-        SPKeys.SETTING_SORT.set(index);
-//        setState(() {
-//          this._sort = this._sortList[index];
-//        });
-        //TODO
-        eventBus.fire(SortChangeEvent());
+        _settingModelView.chooseSortMode(index);
       });
     });
   }
@@ -81,12 +75,7 @@ class _SettingPageState extends State<SettingPage> {
   buildFontItem(List fontList, int fontIndex) {
     return buildItem(S.of(context).font_size, fontList[fontIndex], () {
       DialogChoose.showSortChooseDialg(context, fontList, (index) {
-        SPKeys.SETTING_FONT_SIZE.set(index);
-//        setState(() {
-//          this._font = this._fontList[index];
-//        });
-        //TODO
-        eventBus.fire(FontChangeEvent(index));
+        _settingModelView.chooseFontMode(index);
       });
     });
   }
@@ -94,15 +83,14 @@ class _SettingPageState extends State<SettingPage> {
   buildCompressItem(bool isCompress) {
     return buildSwitchItem(S.of(context).compress_note_item, isCompress,
         (flag) {
-      SPKeys.COMPRESS_ITEM.set(flag);
-      eventBus.fire(CompressEvent(flag));
+      _settingModelView.chooseCompressMode(flag);
     });
   }
 
   buildUploadNoteItem(isAutoUpload) {
     return buildSwitchItem(S.of(context).auto_upload_notes, isAutoUpload,
-        (flag) {
-      SPKeys.AUTO_UPLOAD.set(flag);
+        (flag) async {
+      _settingModelView.chooseUploadMode(flag);
     });
   }
 

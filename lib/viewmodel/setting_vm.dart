@@ -4,4 +4,12 @@ abstract class SettingViewModel {
   void initSettingDatas();
 
   Stream<SettingData> get outSettingData;
+
+  void chooseSortMode(index);
+
+  void chooseFontMode(index);
+
+  void chooseCompressMode(bool isCompress);
+
+  void chooseUploadMode(isAutoUpload);
 }

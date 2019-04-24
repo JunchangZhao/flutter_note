@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/common/event.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/data/setting_data.dart';
 import 'package:flutter_app/utils/sputils.dart';
@@ -39,12 +40,42 @@ class SettingViewModelImpl implements SettingViewModel {
   @override
   Stream<SettingData> get outSettingData =>
       _settingController.stream.map((data) {
-        print(data);
         return data;
       });
 
   @override
   void dispose() {
     _settingController.close();
+  }
+
+  @override
+  Future chooseSortMode(index) async {
+    await SPKeys.SETTING_SORT.set(index);
+    _settingData.sortInde = index;
+    eventBus.fire(SortChangeEvent());
+    _settingController.add(_settingData);
+  }
+
+  @override
+  Future chooseFontMode(index) async {
+    await SPKeys.SETTING_FONT_SIZE.set(index);
+    _settingData.fontIndex = index;
+    eventBus.fire(FontChangeEvent(index));
+    _settingController.add(_settingData);
+  }
+
+  @override
+  Future chooseCompressMode(bool isCompress) async {
+    await SPKeys.COMPRESS_ITEM.set(isCompress);
+    eventBus.fire(CompressEvent(isCompress));
+    _settingData.isCompress = isCompress;
+    _settingController.add(_settingData);
+  }
+
+  @override
+  Future chooseUploadMode(flag) async {
+    await SPKeys.AUTO_UPLOAD.set(flag);
+    _settingData.isAutoUpload = flag;
+    _settingController.add(_settingData);
   }
 }
