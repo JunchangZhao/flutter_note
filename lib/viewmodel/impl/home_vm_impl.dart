@@ -43,6 +43,8 @@ class HomeViewModelImpl implements HomeViewModel {
 
   @override
   edit(Note note) async {
+    _noteList.clear();
+    _homeController.add(null);
     await Navigator.of(context).push(SlideRoute(EditNotePage(note)));
     await getAllNotes();
   }
@@ -52,7 +54,6 @@ class HomeViewModelImpl implements HomeViewModel {
     _noteList.clear();
     List<Note> notes = await _noteModel.getAllNotes(context, false);
     _homeController.add(notes);
-    return 0;
   }
 
   @override

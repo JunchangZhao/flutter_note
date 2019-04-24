@@ -18,6 +18,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   String _accountName = "";
   List<Note> _notes;
+  bool _canShowBackground = true;
 
   HomeViewModel _homeViewModel;
 
@@ -31,7 +32,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         this._accountName = value;
       });
     });
-    print(homePageNoteList);
     this._notes = homePageNoteList;
   }
 
@@ -54,7 +54,36 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     );
   }
 
-  ListView buildNotesListView() {
+  getHomeBody() {
+    return StreamBuilder<List<Note>>(
+        stream: _homeViewModel.outNotelist,
+        builder: (context, snapshot) {
+          this._notes = snapshot.data;
+          return Stack(children: <Widget>[
+            getBackground(),
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: () {
+                        return _homeViewModel.getAllNotes();
+                      },
+                      child: ScrollConfiguration(
+                        child: buildNotesListView(),
+                        behavior: ListBehavior(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]);
+        });
+  }
+
+  Widget buildNotesListView() {
     return ListView.builder(
         itemCount: (_notes == null ? 0 : _notes.length),
         itemBuilder: (BuildContext context, int index) {
@@ -68,17 +97,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       onDismissed: (direction) {
         doOnItemDismiss(index, context);
       },
-      child: StreamBuilder<List<Note>>(
-          stream: _homeViewModel.outNotelist,
-          builder: (context, snapshot) {
-            print("jack: ${snapshot.data}");
-            this._notes = snapshot.data;
-            return GestureDetector(
-                onTap: () {
-                  _homeViewModel.edit(this._notes[index]);
-                },
-                child: NoteListItem(_notes.elementAt(index)));
-          }),
+      child: GestureDetector(
+          onTap: () async {
+            this._canShowBackground = false;
+            var note = this._notes[index];
+            await _homeViewModel.edit(note);
+            this._canShowBackground = true;
+          },
+          child: NoteListItem(_notes.elementAt(index))),
       background: Container(
         color: Colors.grey,
       ),
@@ -108,32 +134,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     ));
   }
 
-  getHomeBody() {
-    return Stack(children: <Widget>[
-      getBackground(),
-      Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () {
-                  _homeViewModel.getAllNotes();
-                },
-                child: ScrollConfiguration(
-                  child: buildNotesListView(),
-                  behavior: ListBehavior(),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ]);
-  }
-
   getBackground() {
-    if (this._notes == null || this._notes.length == 0) {
+    if ((this._notes == null || this._notes.length == 0) &&
+        this._canShowBackground) {
       return Center(
         child: SizedBox(
           width: 100,
