@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/data/db/note.dart';
-import 'package:flutter_app/model/data/home_data.dart';
+import 'package:flutter_app/model/data/ui/home_data.dart';
 import 'package:flutter_app/model/note_model.dart';
 import 'package:flutter_app/router/custome_router.dart';
 import 'package:flutter_app/utils/sputils.dart';

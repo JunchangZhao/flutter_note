@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/common/common_datas.dart';
-import 'package:flutter_app/model/data/setting_data.dart';
+import 'package:flutter_app/model/data/ui/setting_data.dart';
 import 'package:flutter_app/model/note_model.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/viewmodel/splash_vm.dart';

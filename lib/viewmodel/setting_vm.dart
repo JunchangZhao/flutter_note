@@ -1,9 +1,7 @@
-import 'package:flutter_app/model/data/setting_data.dart';
+import 'package:flutter_app/model/data/ui/setting_data.dart';
 import 'package:flutter_app/viewmodel/base_vm.dart';
 
-abstract class SettingViewModel extends BaseViewModel{
-  Stream<SettingData> get outSettingData;
-
+abstract class SettingViewModel<T> extends BaseViewModel<SettingData, T> {
   void chooseSortMode(index);
 
   void chooseFontMode(index);

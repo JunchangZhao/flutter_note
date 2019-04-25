@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/di/provider.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/model/data/setting_data.dart';
+import 'package:flutter_app/model/data/ui/setting_data.dart';
 import 'package:flutter_app/view/base_state.dart';
 import 'package:flutter_app/viewmodel/setting_vm.dart';
 import 'package:flutter_app/widget/dialog_choose.dart';
@@ -25,7 +25,7 @@ class _SettingPageState extends BaseState<SettingViewModel> {
 
   Widget buildBody() {
     return StreamBuilder<SettingData>(
-      stream: viewModel.outSettingData,
+      stream: viewModel.outDatas,
       builder: (context, snapShot) {
         if (snapShot.data == null) {
           return Container();

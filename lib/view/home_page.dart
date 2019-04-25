@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/di/provider.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/model/data/home_data.dart';
+import 'package:flutter_app/model/data/ui/home_data.dart';
 import 'package:flutter_app/view/base_state.dart';
 import 'package:flutter_app/viewmodel/home_vm.dart';
 import 'package:flutter_app/widget/home_drawer.dart';
