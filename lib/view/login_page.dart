@@ -22,11 +22,11 @@ class _LoginPageState extends State<LoginPage> {
   String _email, _password;
   bool _isObscure = true;
   Color _eyeColor;
-  AccountModel accountPresenter;
+  AccountModel accountModel;
 
   @override
   void initState() {
-    accountPresenter = AccountModel(context);
+    accountModel = AccountModel(context);
     super.initState();
   }
 
@@ -222,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future _login() async {
-    LoginResult result = await accountPresenter.login(_email, _password);
+    LoginResult result = await accountModel.login(_email, _password);
     if (result != null && result.isSuccess) {
       if (result.data.isSuccess) {
         SPKeys.ACCOUNT_NAME.set(_email);

@@ -17,11 +17,11 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   String _email, _password, _confirmPasswd;
-  AccountModel _accountPresenter;
+  AccountModel _accountModel;
 
   @override
   void initState() {
-    _accountPresenter = AccountModel(context);
+    _accountModel = AccountModel(context);
     super.initState();
   }
 
@@ -206,7 +206,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future _register() async {
-    RegisterResult result = await _accountPresenter.register(_email, _password);
+    RegisterResult result = await _accountModel.register(_email, _password);
     if (result != null && result.isSuccess) {
       if (result.data.isSuccess) {
         showToast(
