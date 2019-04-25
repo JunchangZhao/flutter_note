@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/common/event.dart';
 import 'package:flutter_app/di/provider.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/data/setting_data.dart';
+import 'package:flutter_app/view/base_state.dart';
 import 'package:flutter_app/viewmodel/setting_vm.dart';
 import 'package:flutter_app/widget/dialog_choose.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
@@ -12,16 +12,7 @@ class SettingPage extends StatefulWidget {
   _SettingPageState createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
-  SettingViewModel _settingModelView;
-
-  @override
-  void initState() {
-    _settingModelView = provideSettingViewModel(context);
-    _settingModelView.initSettingDatas();
-    super.initState();
-  }
-
+class _SettingPageState extends BaseState<SettingViewModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +25,7 @@ class _SettingPageState extends State<SettingPage> {
 
   Widget buildBody() {
     return StreamBuilder<SettingData>(
-      stream: _settingModelView.outSettingData,
+      stream: viewModel.outSettingData,
       builder: (context, snapShot) {
         if (snapShot.data == null) {
           return Container();
@@ -67,7 +58,7 @@ class _SettingPageState extends State<SettingPage> {
   Widget buildSortItem(List sortList, int sortIndex) {
     return buildItem(S.of(context).sort, sortList[sortIndex], () {
       DialogChoose.showSortChooseDialg(context, sortList, (index) {
-        _settingModelView.chooseSortMode(index);
+        viewModel.chooseSortMode(index);
       });
     });
   }
@@ -75,7 +66,7 @@ class _SettingPageState extends State<SettingPage> {
   Widget buildFontItem(List fontList, int fontIndex) {
     return buildItem(S.of(context).font_size, fontList[fontIndex], () {
       DialogChoose.showSortChooseDialg(context, fontList, (index) {
-        _settingModelView.chooseFontMode(index);
+        viewModel.chooseFontMode(index);
       });
     });
   }
@@ -83,14 +74,14 @@ class _SettingPageState extends State<SettingPage> {
   Widget buildCompressItem(bool isCompress) {
     return buildSwitchItem(S.of(context).compress_note_item, isCompress,
         (flag) {
-      _settingModelView.chooseCompressMode(flag);
+      viewModel.chooseCompressMode(flag);
     });
   }
 
   Widget buildUploadNoteItem(isAutoUpload) {
     return buildSwitchItem(S.of(context).auto_upload_notes, isAutoUpload,
         (flag) async {
-      _settingModelView.chooseUploadMode(flag);
+      viewModel.chooseUploadMode(flag);
     });
   }
 
@@ -157,7 +148,7 @@ class _SettingPageState extends State<SettingPage> {
                 child: Text(S.of(context).confirm),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  _settingModelView.logout();
+                  viewModel.logout();
                 },
               ),
             ],
@@ -187,5 +178,10 @@ class _SettingPageState extends State<SettingPage> {
         Divider()
       ],
     );
+  }
+
+  @override
+  provideViewModel() {
+    return provideSettingViewModel(context);
   }
 }

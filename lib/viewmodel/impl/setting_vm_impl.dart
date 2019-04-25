@@ -11,7 +11,7 @@ import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/viewmodel/setting_vm.dart';
 import 'package:package_info/package_info.dart';
 
-class SettingViewModelImpl implements SettingViewModel {
+class SettingViewModelImpl extends SettingViewModel {
   BuildContext context;
   SettingData _settingData = SettingData();
   AccountModel _accountModel;
@@ -21,11 +21,12 @@ class SettingViewModelImpl implements SettingViewModel {
   var _settingController = StreamController<SettingData>.broadcast();
 
   @override
-  initSettingDatas() async {
+  initDatas() async {
     _accountModel = provideAccountModel(context);
     _settingData = await _accountModel.getSettingData();
     _settingController.add(_settingData);
   }
+
 
   @override
   Stream<SettingData> get outSettingData =>
@@ -79,4 +80,5 @@ class SettingViewModelImpl implements SettingViewModel {
     Navigator.pop(context);
     Navigator.of(context).pushReplacementNamed('/LoginPage');
   }
+
 }
