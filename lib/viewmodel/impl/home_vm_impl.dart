@@ -12,7 +12,7 @@ import 'package:flutter_app/view/setting_page.dart';
 import 'package:flutter_app/view/trash_note_page.dart';
 import 'package:flutter_app/viewmodel/home_vm.dart';
 
-class HomeViewModelImpl extends HomeViewModel<HomeData> {
+class HomeViewModelImpl extends HomeViewModel {
   NoteModel _noteModel = NoteModel();
 
   HomeData _homeData = HomeData();

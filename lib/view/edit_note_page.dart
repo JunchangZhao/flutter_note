@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/di/provider.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/data/db/note.dart';
-import 'package:flutter_app/model/note_model.dart';
-import 'package:flutter_app/utils/sputils.dart';
+import 'package:flutter_app/view/base_state.dart';
+import 'package:flutter_app/viewmodel/edit_vm.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:zefyr/zefyr.dart';
 import 'package:oktoast/oktoast.dart';
@@ -14,33 +15,35 @@ class EditNotePage extends StatefulWidget {
   EditNotePage(this._note);
 
   @override
-  _EditNotePage createState() => _EditNotePage();
+  _EditNotePage createState() => _EditNotePage(this._note);
 }
 
-class _EditNotePage extends State<EditNotePage>
+class _EditNotePage extends BaseState<EditViewModel>
     with SingleTickerProviderStateMixin {
   ZefyrController _controller;
   FocusNode _focusNode;
-  NotusDocument document;
-  bool isEdit = false;
+  NotusDocument _document;
+  bool _isEdit = false;
   TabController tabController;
   bool showFloatButton = true;
-  NoteModel notePresenter = NoteModel();
+  Note _note;
+
+  _EditNotePage(this._note);
 
   @override
   void initState() {
     super.initState();
-    if (widget._note == null) {
-      this.document = NotusDocument();
-      document.format(0, 10, NotusAttribute.heading.level1);
+    if (this._note == null) {
+      this._document = NotusDocument();
+      _document.format(0, 10, NotusAttribute.heading.level1);
     } else {
-      this.document = NotusDocument.fromJson(json.decode(widget._note.context));
-      this.isEdit = true;
+      this._document = NotusDocument.fromJson(json.decode(this._note.context));
+      this._isEdit = true;
     }
 
-    _controller = new ZefyrController(document);
-    _controller.addListener(() {
-      saveNote();
+    _controller = new ZefyrController(_document);
+    _controller.addListener(() async {
+      _isEdit = await viewModel.saveNote(_isEdit, _note, _document);
     });
     _focusNode = new FocusNode();
     tabController = TabController(length: 2, vsync: this);
@@ -53,34 +56,6 @@ class _EditNotePage extends State<EditNotePage>
         }
       });
     });
-  }
-
-  Future saveNote() async {
-    if (this.isEdit) {
-      Note note = Note(
-          this.document.toDelta()[0].data,
-          json.encode(this.document),
-          widget._note.createTime,
-          DateTime.now().millisecondsSinceEpoch,
-          await SPKeys.ACCOUNT_NAME.getString());
-      if (this.document.length == 1 &&
-          this.document.toDelta()[0].data == "\n") {
-        notePresenter.deleteNote(note);
-      } else {
-        notePresenter.updateNote(note);
-      }
-    } else {
-      if (this.document.length == 1 &&
-          this.document.toDelta()[0].data == "\n") {
-        return;
-      }
-      this.isEdit = true;
-      notePresenter.addNote(
-              this.document.toDelta()[0].data, json.encode(this.document))
-          .then((note) {
-        widget._note = note;
-      });
-    }
   }
 
   @override
@@ -187,7 +162,7 @@ class _EditNotePage extends State<EditNotePage>
       child: FloatingActionButton(
         child: Icon(Icons.save),
         onPressed: () {
-          saveNote();
+          viewModel.saveNote(_isEdit, _note, _document);
           showToast(
             S.of(context).save_success,
             position: ToastPosition.bottom,
@@ -196,5 +171,10 @@ class _EditNotePage extends State<EditNotePage>
         },
       ),
     );
+  }
+
+  @override
+  EditViewModel provideViewModel() {
+    return provideEditViewModel(context);
   }
 }

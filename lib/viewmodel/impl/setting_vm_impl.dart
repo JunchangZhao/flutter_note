@@ -11,7 +11,7 @@ import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/viewmodel/setting_vm.dart';
 import 'package:package_info/package_info.dart';
 
-class SettingViewModelImpl extends SettingViewModel<SettingData> {
+class SettingViewModelImpl extends SettingViewModel {
   BuildContext context;
   SettingData _settingData = SettingData();
   AccountModel _accountModel;

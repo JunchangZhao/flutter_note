@@ -4,7 +4,7 @@ import 'package:flutter_app/model/data/ui/trash_data.dart';
 import 'package:flutter_app/model/note_model.dart';
 import 'package:flutter_app/viewmodel/trash_vm.dart';
 
-class TrashViewModelImpl extends TrashViewModel<TrashData> {
+class TrashViewModelImpl extends TrashViewModel {
   BuildContext context;
   NoteModel noteModel = NoteModel();
 
