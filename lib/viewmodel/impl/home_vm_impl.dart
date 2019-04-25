@@ -73,8 +73,6 @@ class HomeViewModelImpl implements HomeViewModel {
 
   @override
   undoDelete() async {
-    _homeData.noteList.clear();
-    _homeController.add(_homeData);
     await _noteModel.undoDeleteNote(_removedNote);
     await refreshNotes();
   }

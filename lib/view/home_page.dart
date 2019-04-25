@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/di/provider.dart';
 import 'package:flutter_app/generated/i18n.dart';
@@ -92,15 +94,16 @@ class _MyHomePageState extends BaseState<HomeViewModel>
 
   Widget buildNotesListView(notes) {
     return ListView.builder(
-        itemCount: (notes == null ? 0 : notes.length),
-        itemBuilder: (BuildContext context, int index) {
-          return buildItem(index, context, notes);
-        });
+      itemCount: (notes == null ? 0 : notes.length),
+      itemBuilder: (BuildContext context, int index) {
+        return buildItem(index, context, notes);
+      },
+    );
   }
 
   Dismissible buildItem(int index, BuildContext context, List notes) {
     return Dismissible(
-      key: new Key("${notes[index].createTime}"),
+      key: new Key("${notes[index].createTime}_${Random().nextInt(1000000)}"),
       onDismissed: (direction) {
         doOnItemDismiss(index, context);
       },

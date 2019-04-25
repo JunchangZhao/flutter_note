@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/common_datas.dart';
 import 'package:flutter_app/common/event.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/data/db/note.dart';
@@ -16,35 +17,23 @@ class NoteListItem extends StatefulWidget {
 
 class _NoteListItemState extends State<NoteListItem> {
   Note _note;
-  bool _isCompress = false;
 
   _NoteListItemState(this._note);
 
   int _font = 0;
+  bool _isCompress = false;
 
   @override
   void initState() {
-    SPKeys.SETTING_FONT_SIZE.getInt().then((value) {
-      setState(() {
-        this._font = value;
-      });
-    });
-    SPKeys.COMPRESS_ITEM.getBoolean().then((value) {
-      setState(() {
-        this._isCompress = value;
-      });
-    });
+    this._font = globalSettingData.fontIndex;
+    this._isCompress = globalSettingData.isCompress;
     super.initState();
     eventBus.on<FontChangeEvent>().listen((event) {
-      setState(() {
-        this._font = event.fontType;
-      });
+      this._font = event.fontType;
     });
 
     eventBus.on<CompressEvent>().listen((event) {
-      setState(() {
-        this._isCompress = event.flag;
-      });
+      this._isCompress = event.flag;
     });
   }
 
