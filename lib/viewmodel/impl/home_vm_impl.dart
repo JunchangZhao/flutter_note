@@ -12,9 +12,8 @@ import 'package:flutter_app/view/setting_page.dart';
 import 'package:flutter_app/view/trash_note_page.dart';
 import 'package:flutter_app/viewmodel/home_vm.dart';
 
-class HomeViewModelImpl implements HomeViewModel {
+class HomeViewModelImpl extends HomeViewModel<HomeData> {
   NoteModel _noteModel = NoteModel();
-  var _homeController = StreamController<HomeData>.broadcast();
 
   HomeData _homeData = HomeData();
 
@@ -27,19 +26,9 @@ class HomeViewModelImpl implements HomeViewModel {
   }
 
   @override
-  Stream<HomeData> get outDatas => _homeController.stream.map((data) {
-        return data;
-      });
-
-  @override
   initDatas() async {
     _homeData.accountName = await SPKeys.ACCOUNT_NAME.getString();
     return refreshNotes();
-  }
-
-  @override
-  void dispose() {
-    _homeController.close();
   }
 
   @override
@@ -51,7 +40,7 @@ class HomeViewModelImpl implements HomeViewModel {
   @override
   edit(Note note) async {
     _homeData.noteList.clear();
-    _homeController.add(_homeData);
+    streamController.add(_homeData);
     await Navigator.of(context).push(SlideRoute(EditNotePage(note)));
     await refreshNotes();
   }
@@ -61,7 +50,7 @@ class HomeViewModelImpl implements HomeViewModel {
     _homeData.noteList.clear();
     List<Note> notes = await _noteModel.getAllNotes(context, false);
     _homeData.noteList = notes;
-    _homeController.add(_homeData);
+    streamController.add(_homeData);
   }
 
   @override
