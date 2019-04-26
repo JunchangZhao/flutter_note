@@ -7,7 +7,7 @@ abstract class HomeViewModel extends BaseViewModel<HomeData> {
 
   edit(Note note);
 
-  refreshNotes();
+  refreshFromLocal();
 
   void removeNote(int index);
 
@@ -17,5 +17,6 @@ abstract class HomeViewModel extends BaseViewModel<HomeData> {
 
   gotoTrash() {}
 
-  getNotesFromServer();
+  refreshFromServer();
+
 }

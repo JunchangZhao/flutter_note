@@ -25,7 +25,7 @@ class HomeViewModelImpl extends HomeViewModel {
 
   HomeViewModelImpl(BuildContext context) {
     this.context = context;
-    _uploadModel = UploadModel(context, onListen);
+    _uploadModel = UploadModel(context);
   }
 
   @override
@@ -37,7 +37,7 @@ class HomeViewModelImpl extends HomeViewModel {
   @override
   addNote() async {
     await Navigator.of(context).push(SlideRoute(EditNotePage(null)));
-    await refreshNotes();
+    await refreshFromLocal();
   }
 
   @override
@@ -45,16 +45,20 @@ class HomeViewModelImpl extends HomeViewModel {
     _homeData.noteList.clear();
     streamController.add(_homeData);
     await Navigator.of(context).push(SlideRoute(EditNotePage(note)));
-    await refreshNotes();
+    await refreshFromLocal();
+  }
+
+  refreshNotes() async {
+    await refreshFromLocal();
+    refreshFromServer();
   }
 
   @override
-  refreshNotes() async {
+  Future refreshFromLocal() async {
     _homeData.noteList?.clear();
     List<Note> notes = await _noteModel.getAllNotes(context, false);
     _homeData.noteList = notes;
     streamController.add(_homeData);
-    getNotesFromServer();
   }
 
   @override
@@ -67,7 +71,7 @@ class HomeViewModelImpl extends HomeViewModel {
   @override
   undoDelete() async {
     await _noteModel.undoDeleteNote(_removedNote);
-    await refreshNotes();
+    await refreshFromLocal();
   }
 
   @override
@@ -83,11 +87,11 @@ class HomeViewModelImpl extends HomeViewModel {
   }
 
   @override
-  getNotesFromServer() {
-    _uploadModel.getAllNotes();
+  Future refreshFromServer() async {
+    _uploadModel.refreshFromServer(onGetNotesFinished);
   }
 
-  onListen(String data) {
-    print(data);
+  onGetNotesFinished(String data) async {
+    await refreshFromLocal();
   }
 }

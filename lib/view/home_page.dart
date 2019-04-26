@@ -25,7 +25,7 @@ class _MyHomePageState extends BaseState<HomeViewModel>
   void initState() {
     super.initState();
     eventBus.on<SortChangeEvent>().listen((event) {
-      viewModel.refreshNotes();
+      viewModel.refreshFromLocal();
     });
   }
 
@@ -55,7 +55,7 @@ class _MyHomePageState extends BaseState<HomeViewModel>
               viewModel.gotoSetting();
             }, () {
               viewModel.gotoTrash().then((value) {
-                viewModel.refreshNotes();
+                viewModel.refreshFromLocal();
               });
             }),
           ),
@@ -78,7 +78,7 @@ class _MyHomePageState extends BaseState<HomeViewModel>
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () {
-                  return viewModel.refreshNotes();
+                  return viewModel.refreshFromServer();
                 },
                 child: ScrollConfiguration(
                   child: buildNotesListView(homeData.noteList),
