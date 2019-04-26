@@ -31,14 +31,14 @@ class HomeViewModelImpl extends HomeViewModel {
   @override
   initDatas() async {
     _homeData.accountName = await SPKeys.ACCOUNT_NAME.getString();
-    await refreshNotes();
+    await refreshFromLocal();
+    refreshFromServer();
   }
 
   @override
   addNote() async {
     await Navigator.of(context).push(SlideRoute(EditNotePage(null)));
     await refreshFromLocal();
-    refreshFromServer();
   }
 
   @override
@@ -48,6 +48,7 @@ class HomeViewModelImpl extends HomeViewModel {
     await Navigator.of(context).push(SlideRoute(EditNotePage(note)));
     await refreshFromLocal();
   }
+
 
   @override
   Future refreshFromLocal() async {
