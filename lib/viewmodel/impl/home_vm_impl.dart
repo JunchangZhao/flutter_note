@@ -38,6 +38,7 @@ class HomeViewModelImpl extends HomeViewModel {
   addNote() async {
     await Navigator.of(context).push(SlideRoute(EditNotePage(null)));
     await refreshFromLocal();
+    refreshFromServer();
   }
 
   @override
@@ -46,11 +47,6 @@ class HomeViewModelImpl extends HomeViewModel {
     streamController.add(_homeData);
     await Navigator.of(context).push(SlideRoute(EditNotePage(note)));
     await refreshFromLocal();
-  }
-
-  refreshNotes() async {
-    await refreshFromLocal();
-    refreshFromServer();
   }
 
   @override
