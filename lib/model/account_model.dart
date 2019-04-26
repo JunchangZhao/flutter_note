@@ -38,24 +38,4 @@ class AccountModel {
   }
 
 
-  Future<SettingData> getSettingData() async {
-    SettingData settingData = SettingData();
-    settingData.isAutoUpload = await SPKeys.AUTO_UPLOAD.getBoolean();
-    settingData.sortInde = await SPKeys.SETTING_SORT.getInt();
-    settingData.fontIndex = await SPKeys.SETTING_FONT_SIZE.getInt();
-    var platform = await PackageInfo.fromPlatform();
-    settingData.versionCode = platform.version;
-    settingData.isCompress = await SPKeys.COMPRESS_ITEM.getBoolean();
-    settingData.sortList = [
-      S.of(this.context).modify_time,
-      S.of(this.context).create_time,
-      S.of(this.context).title
-    ];
-    settingData.fontList = [
-      S.of(this.context).small,
-      S.of(this.context).normal,
-      S.of(this.context).large
-    ];
-    return settingData;
-  }
 }

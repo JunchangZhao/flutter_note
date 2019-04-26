@@ -28,7 +28,8 @@ class HomeViewModelImpl extends HomeViewModel {
   @override
   initDatas() async {
     _homeData.accountName = await SPKeys.ACCOUNT_NAME.getString();
-    return refreshNotes();
+    await refreshNotes();
+    startUpload();
   }
 
   @override
@@ -77,4 +78,7 @@ class HomeViewModelImpl extends HomeViewModel {
     return await Navigator.push(
         context, new MaterialPageRoute(builder: (context) => TrashNotePage()));
   }
+
+  @override
+  startUpload() {}
 }

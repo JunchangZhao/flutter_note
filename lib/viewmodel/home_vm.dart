@@ -13,7 +13,9 @@ abstract class HomeViewModel extends BaseViewModel<HomeData> {
 
   undoDelete();
 
-  Future gotoSetting();
+  gotoSetting();
 
-  Future gotoTrash() {}
+  gotoTrash() {}
+
+  startUpload();
 }
