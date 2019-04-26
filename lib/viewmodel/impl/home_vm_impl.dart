@@ -48,7 +48,7 @@ class HomeViewModelImpl extends HomeViewModel {
 
   @override
   refreshNotes() async {
-    _homeData.noteList.clear();
+    _homeData.noteList?.clear();
     List<Note> notes = await _noteModel.getAllNotes(context, false);
     _homeData.noteList = notes;
     streamController.add(_homeData);
