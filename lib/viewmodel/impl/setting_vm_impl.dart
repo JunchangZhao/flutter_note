@@ -14,12 +14,13 @@ class SettingViewModelImpl extends SettingViewModel {
   SettingData _settingData = SettingData();
   AccountModel _accountModel;
   SettingModel _settingModel;
-  SettingViewModelImpl(this.context);
 
+  SettingViewModelImpl(this.context);
 
   @override
   initDatas() async {
     _accountModel = provideAccountModel(context);
+    _settingModel = provideSettingModel(context);
     _settingData = await _settingModel.getSettingData();
     streamController.add(_settingData);
   }
@@ -65,5 +66,4 @@ class SettingViewModelImpl extends SettingViewModel {
     Navigator.pop(context);
     Navigator.of(context).pushReplacementNamed('/LoginPage');
   }
-
 }
