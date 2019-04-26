@@ -29,7 +29,6 @@ class UploadModel {
   }
 
   sendData(data) {
-    print(json.encode(data));
     channel.sink.add(json.encode(data));
   }
 
