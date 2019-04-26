@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/account_model.dart';
-import 'package:flutter_app/model/data/net/login_result.dart';
+import 'package:flutter_app/model/data/net/restful/login_result.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/forget_passwd_page.dart';
 import 'package:flutter_app/view/register_page.dart';

@@ -17,5 +17,5 @@ abstract class HomeViewModel extends BaseViewModel<HomeData> {
 
   gotoTrash() {}
 
-  startUpload();
+  getNotesFromServer();
 }

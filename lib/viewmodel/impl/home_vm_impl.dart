@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/model/data/db/note.dart';
 import 'package:flutter_app/model/data/ui/home_data.dart';
 import 'package:flutter_app/model/note_model.dart';
+import 'package:flutter_app/model/upload_model.dart';
 import 'package:flutter_app/router/custome_router.dart';
 import 'package:flutter_app/utils/sputils.dart';
 import 'package:flutter_app/view/edit_note_page.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_app/viewmodel/home_vm.dart';
 
 class HomeViewModelImpl extends HomeViewModel {
   NoteModel _noteModel = NoteModel();
+  UploadModel _uploadModel;
 
   HomeData _homeData = HomeData();
 
@@ -23,13 +25,13 @@ class HomeViewModelImpl extends HomeViewModel {
 
   HomeViewModelImpl(BuildContext context) {
     this.context = context;
+    _uploadModel = UploadModel(context, onListen);
   }
 
   @override
   initDatas() async {
     _homeData.accountName = await SPKeys.ACCOUNT_NAME.getString();
     await refreshNotes();
-    startUpload();
   }
 
   @override
@@ -52,6 +54,7 @@ class HomeViewModelImpl extends HomeViewModel {
     List<Note> notes = await _noteModel.getAllNotes(context, false);
     _homeData.noteList = notes;
     streamController.add(_homeData);
+    getNotesFromServer();
   }
 
   @override
@@ -80,5 +83,11 @@ class HomeViewModelImpl extends HomeViewModel {
   }
 
   @override
-  startUpload() {}
+  getNotesFromServer() {
+    _uploadModel.getAllNotes();
+  }
+
+  onListen(String data) {
+    print(data);
+  }
 }

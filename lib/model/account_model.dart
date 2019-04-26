@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/model/data/net/login_result.dart';
-import 'package:flutter_app/model/data/net/register_result.dart';
+import 'package:flutter_app/model/data/net/restful/login_result.dart';
+import 'package:flutter_app/model/data/net/restful/register_result.dart';
 import 'package:flutter_app/model/data/ui/setting_data.dart';
 import 'package:flutter_app/utils/netutils.dart';
 import 'package:flutter_app/utils/sputils.dart';

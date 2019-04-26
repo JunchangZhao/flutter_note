@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated/i18n.dart';
 import 'package:flutter_app/model/account_model.dart';
-import 'package:flutter_app/model/data/net/register_result.dart';
+import 'package:flutter_app/model/data/net/restful/register_result.dart';
 import 'package:flutter_app/widget/loading_dialog.dart';
 import 'package:flutter_app/widget/list_behavior.dart';
 import 'package:flutter_svg/svg.dart';

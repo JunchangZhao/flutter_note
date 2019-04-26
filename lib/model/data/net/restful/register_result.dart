@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'register_result.g.dart';
+part 'package:flutter_app/model/data/net/restful/register_result.g.dart';
 
 
 @JsonSerializable()
