@@ -32,7 +32,7 @@ class HomeViewModelImpl extends HomeViewModel {
   initDatas() async {
     _homeData.accountName = await SPKeys.ACCOUNT_NAME.getString();
     await refreshFromLocal();
-    refreshFromServer();
+    await refreshFromServer();
   }
 
   @override
@@ -48,7 +48,6 @@ class HomeViewModelImpl extends HomeViewModel {
     await Navigator.of(context).push(SlideRoute(EditNotePage(note)));
     await refreshFromLocal();
   }
-
 
   @override
   Future refreshFromLocal() async {
@@ -85,7 +84,7 @@ class HomeViewModelImpl extends HomeViewModel {
 
   @override
   Future refreshFromServer() async {
-    _uploadModel.refreshFromServer(onGetNotesFinished);
+    await _uploadModel.refreshFromServer();
   }
 
   onGetNotesFinished(String data) async {
