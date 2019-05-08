@@ -24,11 +24,17 @@ class NoteModel {
     return result;
   }
 
-  Future<Note> addNote(String title, String context) async {
+
+  Future<Note> addNote(String title, String context,
+      {int createTime: -1, int modifyTime: -1}) async {
     NoteDao sqlite = await NoteDao.getInstance();
-    int time = DateTime.now().millisecondsSinceEpoch;
+    if (createTime == -1) {
+      int time = DateTime.now().millisecondsSinceEpoch;
+      createTime = time;
+      modifyTime = time;
+    }
     String user = await SPKeys.ACCOUNT_NAME.getString();
-    Note note = Note(title, context, time, time, user);
+    Note note = Note(title, context, createTime, modifyTime, user);
     await sqlite.insert(note);
     return note;
   }

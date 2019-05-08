@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/common/common_datas.dart';
 import 'package:flutter_app/config/network_config.dart';
 import 'package:flutter_app/model/data/db/note.dart';
-import 'package:flutter_app/model/data/net/websocket/notes_create_modify.dart';
+import 'package:flutter_app/model/data/net/websocket/notes_info.dart';
 import 'package:flutter_app/model/note_model.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -18,19 +18,32 @@ class UploadModel {
     noteModel = NoteModel();
   }
 
+  IOWebSocketChannel getChannel() {
+    IOWebSocketChannel channel = IOWebSocketChannel.connect(
+      NetWorkConfig.WEBSOCKET_ADDRESS,
+      headers: {"Authorization": "Bearer $jwt"},
+    );
+    return channel;
+  }
+
   refreshFromServer() async {
     IOWebSocketChannel channel = getChannel();
     channel.stream.listen((data) async {
+      print(data);
       NotesCreateAndModifyInfo info =
           NotesCreateAndModifyInfo.fromJson(json.decode(data));
       if (info.type == "create_modify_time") {
         List<NoteInfo> notesServer = info.data == null ? [] : info.data;
         List<Note> notesLocal =
             await noteModel.getAllNotes(this.context, false);
-
         pushNotes(notesLocal, notesServer, channel);
-
         pullNotes(notesLocal, notesServer, channel);
+      }
+
+      if (info.type == "pull_note") {
+        NoteInfo noteInfo = info.data[0];
+        noteModel.addNote(noteInfo.title, noteInfo.context,
+            createTime: noteInfo.createTime, modifyTime: noteInfo.modifyTime);
       }
     });
   }
@@ -64,21 +77,13 @@ class UploadModel {
     }
   }
 
-  IOWebSocketChannel getChannel() {
-    IOWebSocketChannel channel = IOWebSocketChannel.connect(
-      NetWorkConfig.WEBSOCKET_ADDRESS,
-      headers: {"Authorization": "Bearer $jwt"},
-    );
-    return channel;
-  }
-
   void pullNotes(List<Note> notesLocal, List<NoteInfo> notesServer,
       IOWebSocketChannel channel) {
     if (notesServer != null && notesServer.length > 0) {
       notesServer.forEach((serverNote) {
         bool needPullNote = true;
 
-        if(notesLocal!=null){
+        if (notesLocal != null) {
           notesLocal.forEach((localNote) {
             if (serverNote.createTime == localNote.createTime) {
               if (serverNote.modifyTime <= localNote.modifyTime) {
@@ -92,7 +97,7 @@ class UploadModel {
           var data = """{
             "type": "get_note",
             "data": {
-               "modifyTime": "${serverNote.createTime.toString()}"
+               "createTime": "${serverNote.createTime.toString()}"
              }
           }""";
           channel.sink.add(data);

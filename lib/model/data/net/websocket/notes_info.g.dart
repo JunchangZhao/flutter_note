@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'notes_create_modify.dart';
+part of 'notes_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-NoteInfo _$DataFromJson(Map<String, dynamic> json) {
+NoteInfo _$NoteInfoFromJson(Map<String, dynamic> json) {
   return new NoteInfo(json['createTime'] as int, json['modifyTime'] as int)
     ..context = json['context'] as String
-    ..title = json['title'] as int;
+    ..title = json['title'] as String;
 }
 
-abstract class _$DataSerializerMixin {
+abstract class _$NoteInfoSerializerMixin {
   int get createTime;
   int get modifyTime;
   String get context;
-  int get title;
+  String get title;
   Map<String, dynamic> toJson() => <String, dynamic>{
         'createTime': createTime,
         'modifyTime': modifyTime,
@@ -30,8 +30,9 @@ NotesCreateAndModifyInfo _$NotesCreateAndModifyInfoFromJson(
   return new NotesCreateAndModifyInfo(
       json['type'] as String,
       (json['data'] as List)
-          ?.map((e) =>
-              e == null ? null : new NoteInfo.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : new NoteInfo.fromJson(e as Map<String, dynamic>))
           ?.toList());
 }
 

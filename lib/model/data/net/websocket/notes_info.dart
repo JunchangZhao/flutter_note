@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'notes_create_modify.g.dart';
+part 'notes_info.g.dart';
 
 @JsonSerializable()
-class NoteInfo extends Object with _$DataSerializerMixin {
+class NoteInfo extends Object with _$NoteInfoSerializerMixin {
   @JsonKey(name: 'createTime')
   int createTime;
 
@@ -14,7 +14,7 @@ class NoteInfo extends Object with _$DataSerializerMixin {
   String context;
 
   @JsonKey(name: 'title')
-  int title;
+  String title;
 
   NoteInfo(
     this.createTime,
@@ -22,7 +22,7 @@ class NoteInfo extends Object with _$DataSerializerMixin {
   );
 
   factory NoteInfo.fromJson(Map<String, dynamic> srcJson) =>
-      _$DataFromJson(srcJson);
+      _$NoteInfoFromJson(srcJson);
 }
 
 @JsonSerializable()
