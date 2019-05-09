@@ -62,16 +62,10 @@ class UploadModel {
         });
 
         if (shouldUpload) {
-          var data = """{
-              "type": "upload_note",
-              "data": {
-                "title": "${note.title}",
-                "context": "${note.context.toString().replaceAll("\"", "\'")}",
-                "createTime": "${note.createTime.toString()}",
-                "modifyTime": "${note.modifyTime.toString()}"
-             }
-          }""";
-          channel.sink.add(data);
+          var data = NotesCreateAndModifyInfo("upload_note", [
+            NoteInfo(note.title, note.context, note.createTime, note.modifyTime)
+          ]);
+          channel.sink.add(json.encode(data.toJson()));
         }
       });
     }

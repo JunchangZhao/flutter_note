@@ -7,9 +7,8 @@ part of 'notes_info.dart';
 // **************************************************************************
 
 NoteInfo _$NoteInfoFromJson(Map<String, dynamic> json) {
-  return new NoteInfo(json['createTime'] as int, json['modifyTime'] as int)
-    ..context = json['context'] as String
-    ..title = json['title'] as String;
+  return new NoteInfo(json['title'] as String, json['context'] as String,
+      json['createTime'] as int, json['modifyTime'] as int);
 }
 
 abstract class _$NoteInfoSerializerMixin {

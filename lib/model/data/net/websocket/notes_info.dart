@@ -17,6 +17,8 @@ class NoteInfo extends Object with _$NoteInfoSerializerMixin {
   String title;
 
   NoteInfo(
+    this.title,
+    this.context,
     this.createTime,
     this.modifyTime,
   );
