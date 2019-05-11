@@ -27,6 +27,10 @@ class _MyHomePageState extends BaseState<HomeViewModel>
     eventBus.on<SortChangeEvent>().listen((event) {
       viewModel.refreshFromLocal();
     });
+
+    eventBus.on<PullNoteEvent>().listen((event){
+      viewModel.refreshFromLocal();
+    });
   }
 
   @override
@@ -47,7 +51,9 @@ class _MyHomePageState extends BaseState<HomeViewModel>
         }
         return Scaffold(
           appBar: AppBar(
-            title: Text(S.of(context).app_name),
+            title: Text(S
+                .of(context)
+                .app_name),
           ),
           body: Center(child: getHomeBody(homeData)),
           drawer: Drawer(
@@ -126,7 +132,9 @@ class _MyHomePageState extends BaseState<HomeViewModel>
     Scaffold.of(context).showSnackBar(new SnackBar(
       content: Row(
         children: <Widget>[
-          Expanded(child: Text(S.of(context).note_removed)),
+          Expanded(child: Text(S
+              .of(context)
+              .note_removed)),
           GestureDetector(
             onTap: () async {
               _canShowBackground = false;
@@ -134,7 +142,9 @@ class _MyHomePageState extends BaseState<HomeViewModel>
               _canShowBackground = true;
             },
             child: Text(
-              S.of(context).undo,
+              S
+                  .of(context)
+                  .undo,
               style: TextStyle(
                 color: Colors.green,
                 fontSize: 18,

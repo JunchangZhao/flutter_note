@@ -6,10 +6,14 @@ class SortChangeEvent {}
 
 class FontChangeEvent {
   int fontType;
+
   FontChangeEvent(this.fontType);
 }
 
-class CompressEvent{
+class CompressEvent {
   bool flag;
+
   CompressEvent(this.flag);
 }
+
+class PullNoteEvent {}

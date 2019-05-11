@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/common/common_datas.dart';
+import 'package:flutter_app/common/event.dart';
 import 'package:flutter_app/config/network_config.dart';
 import 'package:flutter_app/model/data/db/note.dart';
 import 'package:flutter_app/model/data/net/websocket/notes_info.dart';
@@ -44,6 +45,7 @@ class UploadModel {
         NoteInfo noteInfo = info.data[0];
         noteModel.addNote(noteInfo.title, noteInfo.context,
             createTime: noteInfo.createTime, modifyTime: noteInfo.modifyTime);
+        eventBus.fire(PullNoteEvent());
       }
     });
   }
