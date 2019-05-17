@@ -6,3 +6,5 @@ List<Note> homePageNoteList;
 String jwt;
 
 SettingData globalSettingData = SettingData();
+
+String globalUser = "";

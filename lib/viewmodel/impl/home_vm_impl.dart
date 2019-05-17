@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/dao/note_dao.dart';
 import 'package:flutter_app/model/data/db/note.dart';
 import 'package:flutter_app/model/data/ui/home_data.dart';
 import 'package:flutter_app/model/note_model.dart';
@@ -52,8 +53,12 @@ class HomeViewModelImpl extends HomeViewModel {
   @override
   Future refreshFromLocal() async {
     _homeData.noteList?.clear();
-    List<Note> notes = await _noteModel.getAllNotes(context, false);
+    List<Note> notes =
+        await _noteModel.getAllNotes(context, NoteDao.TYPE_NORMAL);
     _homeData.noteList = notes;
+    for (var note in notes) {
+      print("""${note.title}-->${note.isDeleted}""");
+    }
     streamController.add(_homeData);
   }
 

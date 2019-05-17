@@ -16,12 +16,11 @@ class NoteInfo extends Object with _$NoteInfoSerializerMixin {
   @JsonKey(name: 'title')
   String title;
 
-  NoteInfo(
-    this.title,
-    this.context,
-    this.createTime,
-    this.modifyTime,
-  );
+  @JsonKey(name: 'isDeleted')
+  bool isDeleted;
+
+  NoteInfo(this.title, this.context, this.createTime, this.modifyTime,
+      this.isDeleted);
 
   factory NoteInfo.fromJson(Map<String, dynamic> srcJson) =>
       _$NoteInfoFromJson(srcJson);

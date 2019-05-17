@@ -4,6 +4,10 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class NoteDao {
+  static final int TYPE_NORMAL = 0;
+  static final int TYPE_TRASH = 1;
+  static final int TYPE_ALL = 2;
+
   static NoteDao instance;
   Database db;
 
@@ -20,7 +24,7 @@ class NoteDao {
     String path = join(databasesPath, dbName);
     db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
-          await db.execute('''
+      await db.execute('''
           CREATE TABLE $tableName (
             $columnId INTEGER PRIMARY KEY autoincrement, 
             $columnTitile TEXT, 
@@ -30,7 +34,7 @@ class NoteDao {
             $columnIsDeleted BOOL,
             $columnUser TEXT)
           ''');
-        });
+    });
   }
 
   close() async {
@@ -42,7 +46,14 @@ class NoteDao {
     return note;
   }
 
-  Future<List<Note>> queryAll(bool trash) async {
+  Future<List<Note>> queryAll(int type) async {
+    String whereStr = ' $columnUser = ?';
+    List whereArgs = [await SPKeys.ACCOUNT_NAME.getString()];
+    if (type != 2) {
+      whereStr = '$columnIsDeleted = ? and $columnUser = ?';
+      whereArgs = [type, await SPKeys.ACCOUNT_NAME.getString()];
+    }
+
     List<Map> maps = await db.query(tableName,
         columns: [
           columnTitile,
@@ -52,8 +63,8 @@ class NoteDao {
           columnIsDeleted
         ],
         orderBy: columnModifyTime,
-        where: '$columnIsDeleted = ? and $columnUser = ?',
-        whereArgs: [trash ? 1 : 0, await SPKeys.ACCOUNT_NAME.getString()]);
+        where: whereStr,
+        whereArgs: whereArgs);
 
     if (maps == null || maps.length == 0) {
       return null;
@@ -69,17 +80,20 @@ class NoteDao {
 
   Future<int> delete(Note note) async {
     note.isDeleted = true;
+    note.modifyTime = DateTime.now().millisecondsSinceEpoch;
     return await db.update(tableName, note.toMap(),
         where: '$columnCreateTime = ?', whereArgs: [note.createTime]);
   }
 
   Future<int> undoDelete(Note note) async {
     note.isDeleted = false;
+    note.modifyTime = DateTime.now().millisecondsSinceEpoch;
     return await db.update(tableName, note.toMap(),
         where: '$columnCreateTime = ?', whereArgs: [note.createTime]);
   }
 
   Future<int> update(Note note) async {
+    note.modifyTime = DateTime.now().millisecondsSinceEpoch;
     return await db.update(tableName, note.toMap(),
         where: '$columnCreateTime = ?', whereArgs: [note.createTime]);
   }

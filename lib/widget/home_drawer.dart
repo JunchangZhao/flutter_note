@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/common_datas.dart';
 import 'package:flutter_app/generated/i18n.dart';
-import 'package:flutter_app/view/setting_page.dart';
-import 'package:flutter_app/view/trash_note_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -106,27 +105,18 @@ class HomeDrawer extends StatelessWidget {
     );
   }
 
-  Container buildTitle(BuildContext context) {
-    return Container(
-      color: Colors.lightBlue,
-      height: 160,
-      child: Row(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(28.0),
-            child: SizedBox(
-              width: 60,
-              height: 60,
-              child: SvgPicture.asset(
-                "icons/notebook.svg",
-              ),
-            ),
-          ),
-          Text(
-            S.of(context).app_name,
-            style: TextStyle(color: Colors.white, fontSize: 28),
-          ),
-        ],
+  Widget buildTitle(BuildContext context) {
+    return UserAccountsDrawerHeader(
+      accountEmail: Text(
+        S.of(context).app_name,
+        style: TextStyle(color: Colors.white, fontSize: 20),
+      ),
+      currentAccountPicture: SizedBox(
+        width: 60,
+        height: 60,
+        child: SvgPicture.asset(
+          "icons/notebook.svg",
+        ),
       ),
     );
   }

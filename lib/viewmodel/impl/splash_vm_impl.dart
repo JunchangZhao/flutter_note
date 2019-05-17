@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/common/common_datas.dart';
+import 'package:flutter_app/dao/note_dao.dart';
 import 'package:flutter_app/model/data/ui/setting_data.dart';
 import 'package:flutter_app/model/note_model.dart';
 import 'package:flutter_app/utils/sputils.dart';
@@ -25,7 +26,7 @@ class SplashViewModelImpl implements SplashViewModel {
   }
 
   Future initDatas() async {
-    homePageNoteList = await _noteModel.getAllNotes(context, false);
+    homePageNoteList = await _noteModel.getAllNotes(context, NoteDao.TYPE_NORMAL);
     jwt = await SPKeys.JWT.getString();
     globalSettingData = SettingData();
     globalSettingData.isCompress = await SPKeys.COMPRESS_ITEM.getBoolean();

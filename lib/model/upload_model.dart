@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/common/common_datas.dart';
 import 'package:flutter_app/common/event.dart';
 import 'package:flutter_app/config/network_config.dart';
+import 'package:flutter_app/dao/note_dao.dart';
 import 'package:flutter_app/model/data/db/note.dart';
 import 'package:flutter_app/model/data/net/websocket/notes_info.dart';
 import 'package:flutter_app/model/note_model.dart';
@@ -36,7 +37,7 @@ class UploadModel {
       if (info.type == "create_modify_time") {
         List<NoteInfo> notesServer = info.data == null ? [] : info.data;
         List<Note> notesLocal =
-            await noteModel.getAllNotes(this.context, false);
+            await noteModel.getAllNotes(this.context, NoteDao.TYPE_ALL);
         pushNotes(notesLocal, notesServer, channel);
         pullNotes(notesLocal, notesServer, channel);
       }
@@ -44,7 +45,9 @@ class UploadModel {
       if (info.type == "pull_note") {
         NoteInfo noteInfo = info.data[0];
         noteModel.addNote(noteInfo.title, noteInfo.context,
-            createTime: noteInfo.createTime, modifyTime: noteInfo.modifyTime);
+            createTime: noteInfo.createTime,
+            modifyTime: noteInfo.modifyTime,
+            isDeleted: noteInfo.isDeleted);
         eventBus.fire(PullNoteEvent());
       }
     });
@@ -57,7 +60,7 @@ class UploadModel {
         bool shouldUpload = true;
         notesServer.forEach((serverNote) {
           if (serverNote.createTime == note.createTime) {
-            if (serverNote.modifyTime >= note.modifyTime) {
+            if (serverNote.modifyTime > note.modifyTime) {
               shouldUpload = false;
             }
           }
@@ -65,7 +68,8 @@ class UploadModel {
 
         if (shouldUpload) {
           var data = NotesCreateAndModifyInfo("upload_note", [
-            NoteInfo(note.title, note.context, note.createTime, note.modifyTime)
+            NoteInfo(note.title, note.context, note.createTime, note.modifyTime,
+                note.isDeleted)
           ]);
           channel.sink.add(json.encode(data.toJson()));
         }
